@@ -5,6 +5,8 @@
  */
 package losayala;
 
+import losayala.objetos.Arbitro;
+
 /**
  *
  * @author ilichh1
@@ -16,6 +18,9 @@ public class LosAyala {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+       
+        Arbitro abritroDePrueba = new Arbitro();
+        abritroDePrueba.guardar();
     }
     
 }
