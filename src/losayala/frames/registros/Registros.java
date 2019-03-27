@@ -36,6 +36,7 @@ public class Registros extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -89,6 +90,8 @@ public class Registros extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel1.setText("Equipo");
+
+        jButton1.setText("Equipos");
 
         jMenu1.setText("Archivos");
 
@@ -150,7 +153,9 @@ public class Registros extends javax.swing.JFrame {
                         .addComponent(btnAlbitro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1)
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton1)))
                 .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
@@ -178,8 +183,10 @@ public class Registros extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(btnAlbitro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
 
         pack();
@@ -240,6 +247,7 @@ public class Registros extends javax.swing.JFrame {
     private javax.swing.JButton btnAlbitro;
     private javax.swing.JButton btnDT;
     private javax.swing.JButton btnJugador;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
