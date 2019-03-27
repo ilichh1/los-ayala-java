@@ -17,8 +17,9 @@ import losayala.interfaces.DatabaseObject;
  *
  * @author ilichh1
  */
-public class Persona implements DatabaseObject {
+public abstract class Persona implements DatabaseObject {
     public static final String TABLE_NAME = "persona";
+    public static final String PK_COLUMN_NAME = "id_persona";
     public static final String[] COLUMNS = new String[] {
         "nombre",
         "apellido_pat",
@@ -113,23 +114,8 @@ public class Persona implements DatabaseObject {
     
     @Override
     public boolean guardar() {
-        try {
-            Connection db = ConexionBD.getDataBaseConnection();
-            if (this.getIdPersona() != -1) {
-                System.out.println("No puedes guardar un arbitro que ya existe.");
-                return false;
-            }
-            
-            String sql = ConexionBD.constructorConsultasInsert(TABLE_NAME, COLUMNS, this.toStringArray());
-            
-            Statement stmt = db.createStatement();
-            stmt.execute(sql);
-            
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return true;
+        boolean queryResult = ConexionBD.executeQuery("insert", this);
+        return queryResult;
     }
 
     @Override
@@ -140,5 +126,30 @@ public class Persona implements DatabaseObject {
     @Override
     public boolean eliminar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+
+    @Override
+    public String getPkName() {
+        return PK_COLUMN_NAME;
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        return COLUMNS;
+    }
+
+    @Override
+    public void savePk(int pk) {
+        this.setIdPersona(pk);
+    }
+
+    @Override
+    public int getPk() {
+        return this.getIdPersona();
     }
 }

@@ -13,4 +13,10 @@ public interface DatabaseObject {
     public abstract boolean guardar();
     public abstract boolean actualizar();
     public abstract boolean eliminar();
+    public abstract void savePk(int pk);
+    public abstract int getPk();
+    public abstract String getTableName();
+    public abstract String getPkName();
+    public abstract String[] getColumnNames();
+    public abstract String[] toStringArray();
 }

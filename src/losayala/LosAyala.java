@@ -17,10 +17,17 @@ public class LosAyala {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-       
-        Arbitro abritroDePrueba = new Arbitro();
-        abritroDePrueba.guardar();
+        // UNA MUESTRA DE CADA OBJETO
+        
+        // JUGADOR
+        
+        // ARBITRO
+        
+        // EQUIPO
+        
+        // PARTIDO
+        
+        // GOL
     }
     
 }

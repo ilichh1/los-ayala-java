@@ -6,8 +6,10 @@
 package losayala.conexiondb;
 
 import java.sql.Connection;
+import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import losayala.interfaces.DatabaseObject;
 
 /**
  *
@@ -67,7 +69,7 @@ public class ConexionBD {
         return sql;
     }
     
-    public static String constructorConsultasUpdate(String tabla, String[] columns, String[] values) {
+    public static String constructorConsultasUpdate(String tabla, String[] columns, String[] values, String pkName, int pkValue) {
         // INSERT INTO `cancha`.`persona` (`nombre`, `apellido_pat`, `apellido_mat`) VALUES ('Nancy', 'Perez', 'Perez');
         String updateValues = "";
         
@@ -80,8 +82,64 @@ public class ConexionBD {
         updateValues = updateValues.substring(0,updateValues.length()-1);
         
         // TODO: Agregar el ID para el where
-        String sql = "UPDATE "+tabla+" SET " + updateValues + "WHERE";
+        String sql = "UPDATE "+tabla+" SET " + updateValues + " WHERE " + pkName + " = " + pkValue;
         return sql;
+    }
+    
+    public static boolean executeQuery(String queryType, DatabaseObject obj) {
+        String sqlQuery = "";
+        String tableName = obj.getTableName();
+        String tableColumns[] = obj.getColumnNames();
+        String values[] = obj.toStringArray();
+        String pkName = obj.getPkName();
+        int pkValue = obj.getPk();
+        
+        switch(queryType) {
+            case "insert":
+                sqlQuery = constructorConsultasInsert(tableName, tableColumns, values);
+            break;
+            case "update":
+                sqlQuery = constructorConsultasUpdate(tableName, tableColumns, values, pkName, pkValue);
+            break;
+            case "delete":
+                // DELETE FROM `cancha`.`persona` WHERE (`id_persona` = '1');
+                sqlQuery = "DELETE FROM "
+                        + tableName
+                        + " WHERE "
+                        + pkName
+                        + " = " + pkValue;
+            break;
+            default:
+                dbLogger("ESTE TIPO DE CONSULTA NO ESTA SOPORTADO");
+        }
+        
+        try (Statement stmt = getDataBaseConnection().createStatement()) {
+            stmt.execute(sqlQuery);
+        } catch (SQLException ex) {
+            dbLogger(ex.getLocalizedMessage());
+            return false;
+        }
+        
+        if ("insert".equals(queryType)) {
+            obj.savePk(getLastGeneratedId());
+        }
+        
+        return true;
+    }
+    
+    private static int getLastGeneratedId() {
+        try {
+            Statement stmt = getDataBaseConnection().createStatement();
+            stmt.execute("SELECT last_insert_id();");
+            return stmt.getResultSet().getInt(0);
+        } catch (SQLException ex) {
+            dbLogger(ex.getLocalizedMessage());
+        }
+        return -1;
+    }
+    
+    public static void dbLogger(String msg) {
+        System.out.println("ERROR EN LA BASE DE DATOS: " + msg);
     }
     
 }
