@@ -9,12 +9,12 @@ package losayala.frames.registros;
  *
  * @author RENT A CENTER
  */
-public class RegistroDT extends javax.swing.JInternalFrame {
+public class RegistroUsuario extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form RegistroDT
+     * Creates new form RegistroUsuario
      */
-    public RegistroDT() {
+    public RegistroUsuario() {
         initComponents();
     }
 
@@ -32,29 +32,28 @@ public class RegistroDT extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txtNombreDT = new javax.swing.JTextField();
-        txtApellido1DT = new javax.swing.JTextField();
-        txtApellido2DT = new javax.swing.JTextField();
-        txtTelDT = new javax.swing.JTextField();
+        txtNombreU = new javax.swing.JTextField();
+        txtApellido1U = new javax.swing.JTextField();
+        txtApellido2U = new javax.swing.JTextField();
+        txtTelU = new javax.swing.JTextField();
         btnGuardarDT = new javax.swing.JButton();
         btnCancelarDT = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        txtbuscarDT = new javax.swing.JTextField();
-        btnBuscarDT = new javax.swing.JButton();
-        btnEditarDT = new javax.swing.JButton();
-        btnAgregarDT = new javax.swing.JButton();
-        btnEliminarDT = new javax.swing.JButton();
+        txtbuscarU = new javax.swing.JTextField();
+        btnBuscarJ = new javax.swing.JButton();
+        btnEditarU = new javax.swing.JButton();
+        btnAgregarU = new javax.swing.JButton();
+        btnEliminarU = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableUsuario = new javax.swing.JTable();
 
         setClosable(true);
-        setForeground(java.awt.Color.white);
         setIconifiable(true);
-        setTitle("Registro DT");
+        setTitle("Registro Usuario");
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel2.setText("Director Técnico");
+        jLabel2.setText("Usuario");
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel7.setText("Nombre:");
@@ -68,9 +67,15 @@ public class RegistroDT extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel10.setText("Apellido Materno:");
 
-        txtNombreDT.addActionListener(new java.awt.event.ActionListener() {
+        txtNombreU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreDTActionPerformed(evt);
+                txtNombreUActionPerformed(evt);
+            }
+        });
+
+        txtApellido1U.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtApellido1UActionPerformed(evt);
             }
         });
 
@@ -84,20 +89,20 @@ public class RegistroDT extends javax.swing.JInternalFrame {
         btnCancelarDT.setText("Cancelar");
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel5.setText("Buscar Director Técnico");
+        jLabel5.setText("Buscar Usuario");
 
-        btnBuscarDT.setText("Buscar");
+        btnBuscarJ.setText("Buscar");
 
-        btnEditarDT.setText("Editar");
-        btnEditarDT.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarU.setText("Editar");
+        btnEditarU.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarDTActionPerformed(evt);
+                btnEditarUActionPerformed(evt);
             }
         });
 
-        btnAgregarDT.setText("Agregar");
+        btnAgregarU.setText("Agregar");
 
-        btnEliminarDT.setText("Eliminar");
+        btnEliminarU.setText("Eliminar");
 
         tableUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,55 +141,55 @@ public class RegistroDT extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addGap(4, 4, 4)
+                .addComponent(txtNombreU, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addGap(4, 4, 4)
+                .addComponent(txtApellido1U, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addGap(4, 4, 4)
+                .addComponent(txtApellido2U, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGap(4, 4, 4)
+                .addComponent(txtTelU, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel5))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(140, 140, 140)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(txtbuscarU, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(btnBuscarJ)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtNombreDT, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtApellido1DT, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtApellido2DT, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtTelDT, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(txtbuscarDT, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(btnBuscarDT)
-                        .addGap(5, 5, 5)
-                        .addComponent(btnEditarDT)
-                        .addGap(9, 9, 9)
-                        .addComponent(btnAgregarDT)
-                        .addGap(9, 9, 9)
-                        .addComponent(btnEliminarDT))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(btnCancelarDT)
-                        .addGap(125, 125, 125)
-                        .addComponent(btnGuardarDT))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18))
+                        .addGap(60, 60, 60)
+                        .addComponent(btnAgregarU))
+                    .addComponent(btnEditarU))
+                .addGap(9, 9, 9)
+                .addComponent(btnEliminarU))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(btnCancelarDT)
+                .addGap(105, 105, 105)
+                .addComponent(btnGuardarDT))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,36 +201,36 @@ public class RegistroDT extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel7))
-                    .addComponent(txtNombreDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombreU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel9))
-                    .addComponent(txtApellido1DT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApellido1U, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel10))
-                    .addComponent(txtApellido2DT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApellido2U, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabel8))
-                    .addComponent(txtTelDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(txtTelU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel5)
+                .addGap(1, 1, 1)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtbuscarDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarDT)
-                    .addComponent(btnEditarDT)
-                    .addComponent(btnAgregarDT)
-                    .addComponent(btnEliminarDT))
+                    .addComponent(txtbuscarU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarJ)
+                    .addComponent(btnAgregarU)
+                    .addComponent(btnEditarU)
+                    .addComponent(btnEliminarU))
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
@@ -237,25 +242,29 @@ public class RegistroDT extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreDTActionPerformed
+    private void txtNombreUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreUActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreDTActionPerformed
+    }//GEN-LAST:event_txtNombreUActionPerformed
 
     private void btnGuardarDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarDTActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarDTActionPerformed
 
-    private void btnEditarDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarDTActionPerformed
+    private void txtApellido1UActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellido1UActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarDTActionPerformed
+    }//GEN-LAST:event_txtApellido1UActionPerformed
+
+    private void btnEditarUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarUActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarDT;
-    private javax.swing.JButton btnBuscarDT;
+    private javax.swing.JButton btnAgregarU;
+    private javax.swing.JButton btnBuscarJ;
     private javax.swing.JButton btnCancelarDT;
-    private javax.swing.JButton btnEditarDT;
-    private javax.swing.JButton btnEliminarDT;
+    private javax.swing.JButton btnEditarU;
+    private javax.swing.JButton btnEliminarU;
     private javax.swing.JButton btnGuardarDT;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -266,10 +275,10 @@ public class RegistroDT extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tableUsuario;
-    private javax.swing.JTextField txtApellido1DT;
-    private javax.swing.JTextField txtApellido2DT;
-    private javax.swing.JTextField txtNombreDT;
-    private javax.swing.JTextField txtTelDT;
-    private javax.swing.JTextField txtbuscarDT;
+    private javax.swing.JTextField txtApellido1U;
+    private javax.swing.JTextField txtApellido2U;
+    private javax.swing.JTextField txtNombreU;
+    private javax.swing.JTextField txtTelU;
+    private javax.swing.JTextField txtbuscarU;
     // End of variables declaration//GEN-END:variables
 }

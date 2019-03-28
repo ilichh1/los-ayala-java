@@ -12,11 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/amplemind/NetBeansProjects/LosAyala/src/losayala/objetos/Arbitro.java</file>
-            <file>file:/Users/amplemind/NetBeansProjects/LosAyala/src/losayala/interfaces/DatabaseObject.java</file>
-            <file>file:/Users/amplemind/NetBeansProjects/LosAyala/src/losayala/LosAyala.java</file>
-            <file>file:/Users/amplemind/NetBeansProjects/LosAyala/src/losayala/objetos/Persona.java</file>
-            <file>file:/Users/amplemind/NetBeansProjects/LosAyala/src/losayala/conexiondb/ConexionBD.java</file>
+            <file>file:/C:/Users/RENT%20A%20CENTER/Documents/NetBeansProjects/los-ayala-java/src/losayala/frames/registros/RegistroDT.java</file>
+            <file>file:/C:/Users/RENT%20A%20CENTER/Documents/NetBeansProjects/los-ayala-java/src/losayala/frames/registros/RegistroJugador.java</file>
+            <file>file:/C:/Users/RENT%20A%20CENTER/Documents/NetBeansProjects/los-ayala-java/src/losayala/frames/registros/RegistroAlbitro.java</file>
+            <file>file:/C:/Users/RENT%20A%20CENTER/Documents/NetBeansProjects/los-ayala-java/src/losayala/frames/registros/Registros.java</file>
         </group>
     </open-files>
 </project-private>
