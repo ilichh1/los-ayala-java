@@ -225,7 +225,8 @@ public class Registros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel4)))
+                    .addComponent(jLabel4))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
