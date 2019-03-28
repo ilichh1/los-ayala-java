@@ -1,4 +1,7 @@
 /build/
-/nbproject/private
-/nbproject/private/
-/nbproject/private/*
+nbproject
+nbproject/
+nbproject/private
+nbproject/private/
+nbproject/private/*
+ignore
