@@ -10,7 +10,8 @@ package losayala.frames.registros;
  * @author RENT A CENTER
  */
 public class Registros extends javax.swing.JFrame {
-
+    private static final Contenedor CONTAINER_FRAME = new Contenedor();
+    
     /**
      * Creates new form Registros
      */
@@ -56,7 +57,7 @@ public class Registros extends javax.swing.JFrame {
         setTitle("Registros");
 
         btnDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/AL.png"))); // NOI18N
-        btnDT.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDT.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnDT.setSelected(true);
         btnDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,8 +66,13 @@ public class Registros extends javax.swing.JFrame {
         });
 
         btnJugador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/JUG.png"))); // NOI18N
-        btnJugador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnJugador.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnJugador.setSelected(true);
+        btnJugador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnJugadorMouseClicked(evt);
+            }
+        });
         btnJugador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJugadorActionPerformed(evt);
@@ -74,7 +80,7 @@ public class Registros extends javax.swing.JFrame {
         });
 
         btnAlbitro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/DT.png"))); // NOI18N
-        btnAlbitro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAlbitro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAlbitro.setSelected(true);
         btnAlbitro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,7 +101,7 @@ public class Registros extends javax.swing.JFrame {
         jLabel6.setText("Albitro");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/EQ.png"))); // NOI18N
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.setSelected(true);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,14 +113,14 @@ public class Registros extends javax.swing.JFrame {
         jLabel7.setText("Director Tecnico");
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/GOL.png"))); // NOI18N
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.setSelected(true);
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel8.setText("Equipo");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/VS.png"))); // NOI18N
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.setSelected(true);
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -123,6 +129,11 @@ public class Registros extends javax.swing.JFrame {
         jMenu1.setText("Archivos");
 
         jMenuItem2.setText("Cerrar Sesión ");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -233,7 +244,8 @@ public class Registros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTActionPerformed
-        // TODO add your handling code here:
+        RegistroDT registroDt = new RegistroDT();
+        registroDt.setVisible(true);
     }//GEN-LAST:event_btnDTActionPerformed
 
     private void btnJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorActionPerformed
@@ -251,6 +263,18 @@ public class Registros extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void btnJugadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJugadorMouseClicked
+        RegistroJugador jugadorFrame = new RegistroJugador();
+        CONTAINER_FRAME.addInternalFrame(jugadorFrame);
+        CONTAINER_FRAME.setVisible(true);
+        System.out.println("ADDED TO INTERNAL FRAME");
+        // this.setVisible(false);
+    }//GEN-LAST:event_btnJugadorMouseClicked
 
     /**
      * @param args the command line arguments

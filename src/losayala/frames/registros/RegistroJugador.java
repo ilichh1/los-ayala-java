@@ -54,9 +54,11 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         btnEditarJ = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
-        setBorder(null);
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setClosable(true);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Registro Jugador");
         setToolTipText("");
 
