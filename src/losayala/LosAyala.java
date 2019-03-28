@@ -5,6 +5,8 @@
  */
 package losayala;
 
+import losayala.frames.inicio.Inicio;
+import losayala.frames.registros.RegistroJugador;
 import losayala.objetos.Arbitro;
 
 /**
@@ -17,6 +19,10 @@ public class LosAyala {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Inicio primerFrame = new Inicio();
+        primerFrame.setVisible(true);
+        // RegistroJugador jugadorFrame = new RegistroJugador();
+        // jugadorFrame.setVisible(true);
         // UNA MUESTRA DE CADA OBJETO
         
         // JUGADOR
