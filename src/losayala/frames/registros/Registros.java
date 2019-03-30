@@ -9,7 +9,7 @@ package losayala.frames.registros;
  *
  * @author RENT A CENTER
  */
-public class Registros extends javax.swing.JFrame {
+public class Registros extends javax.swing.JInternalFrame {
     private static final Contenedor CONTAINER_FRAME = new Contenedor();
     
     /**

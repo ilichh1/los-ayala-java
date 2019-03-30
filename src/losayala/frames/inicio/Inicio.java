@@ -5,7 +5,7 @@
  */
 package losayala.frames.inicio;
 
-import losayala.frames.registros.Registros;
+import losayala.frames.registros.Contenedor;
 
 /**
  *
@@ -147,9 +147,8 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnentrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnentrarActionPerformed
-        this.setVisible(false);
-        Registros registrosFrame = new Registros();
-        registrosFrame.setVisible(true);
+        Contenedor frameContenedor = new Contenedor();
+        frameContenedor.setVisible(true);
     }//GEN-LAST:event_btnentrarActionPerformed
 
     private void txtusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusuarioActionPerformed

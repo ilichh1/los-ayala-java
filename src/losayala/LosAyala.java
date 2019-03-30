@@ -21,19 +21,6 @@ public class LosAyala {
     public static void main(String[] args) {
         Inicio primerFrame = new Inicio();
         primerFrame.setVisible(true);
-        // RegistroJugador jugadorFrame = new RegistroJugador();
-        // jugadorFrame.setVisible(true);
-        // UNA MUESTRA DE CADA OBJETO
-        
-        // JUGADOR
-        
-        // ARBITRO
-        
-        // EQUIPO
-        
-        // PARTIDO
-        
-        // GOL
     }
     
 }
