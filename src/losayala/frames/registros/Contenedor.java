@@ -37,6 +37,8 @@ public class Contenedor extends javax.swing.JFrame {
         };
         
         addAllInternalFrames(allFrames);
+        
+        this.setVisible(true);
     }
     
     private void addAllInternalFrames(JInternalFrame[] frames) {
