@@ -5,6 +5,8 @@
  */
 package losayala.frames.registros;
 
+import java.awt.Dimension;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 /**
@@ -25,6 +27,8 @@ public class Contenedor extends javax.swing.JFrame {
      */
     public Contenedor() {
         initComponents();
+        this.setVisible(true);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
         JInternalFrame[] allFrames = new JInternalFrame[] {
             ARBITRO_FRAME,
@@ -37,8 +41,7 @@ public class Contenedor extends javax.swing.JFrame {
         };
         
         addAllInternalFrames(allFrames);
-        
-        this.setVisible(true);
+        // this.setUndecorated(true);
     }
     
     private void addAllInternalFrames(JInternalFrame[] frames) {
@@ -48,8 +51,10 @@ public class Contenedor extends javax.swing.JFrame {
     }
     
     public void addInternalFrame(javax.swing.JInternalFrame internalFrame) {
-        this.desktopPane.add(internalFrame);
+        desktopPane.add(internalFrame);
+        // internalFrame.setLocationRelativeTo();
         internalFrame.setVisible(true);
+        internalFrame.setLocation(128, 128);
     }
 
     /**
@@ -67,7 +72,7 @@ public class Contenedor extends javax.swing.JFrame {
         setTitle("LOS AYALA");
         setBounds(new java.awt.Rectangle(0, 23, 500, 500));
 
-        desktopPane.setBackground(new java.awt.Color(255, 255, 255));
+        desktopPane.setBackground(new java.awt.Color(16, 129, 14));
         desktopPane.setBounds(new java.awt.Rectangle(0, 0, 500, 500));
         desktopPane.setLayout(null);
 
