@@ -18,8 +18,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
-        
-        // jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/inicio/fondo-cancha.jpg"))); // NOI18N
+        this.setLocationRelativeTo(null);
     }
 
     /**
