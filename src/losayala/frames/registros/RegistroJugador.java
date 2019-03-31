@@ -37,7 +37,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         txtApellido2J = new javax.swing.JTextField();
         txtTelJ = new javax.swing.JTextField();
         btnGuardarJ = new javax.swing.JButton();
-        btnCancelarJ = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         boxPosicion = new javax.swing.JComboBox<>();
@@ -47,7 +46,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         txtbuscarJ = new javax.swing.JTextField();
         btnBuscarJ = new javax.swing.JButton();
-        btnAgregarJ = new javax.swing.JButton();
         btnEliminarJ = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableJugadores = new javax.swing.JTable();
@@ -90,8 +88,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCancelarJ.setText("Cancelar");
-
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setText("Numero de Playera:");
 
@@ -119,13 +115,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         jLabel5.setText("Buscar Jugadores por Nombre");
 
         btnBuscarJ.setText("Buscar");
-
-        btnAgregarJ.setText("Agregar");
-        btnAgregarJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarJActionPerformed(evt);
-            }
-        });
 
         btnEliminarJ.setText("Eliminar");
 
@@ -208,29 +197,28 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(6, 6, 6)
-                                .addComponent(txtTelJ, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtTelJ, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(3, 3, 3)
+                                .addComponent(txtNumPlayera, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(17, 17, 17)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(3, 3, 3)
-                .addComponent(txtNumPlayera, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(btnSeleccionarFoto))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel6)
                 .addGap(28, 28, 28)
                 .addComponent(boxPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)))))
+                        .addGap(50, 50, 50)
+                        .addComponent(jRadioButton1)))
+                .addGap(19, 19, 19)
+                .addComponent(jRadioButton2)
+                .addGap(39, 39, 39)
+                .addComponent(btnSeleccionarFoto))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel5)
@@ -241,20 +229,15 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
                 .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnBuscarJ)
-                .addGap(10, 10, 10)
-                .addComponent(btnEditarJ)
-                .addGap(6, 6, 6)
-                .addComponent(btnAgregarJ)
-                .addGap(6, 6, 6)
+                .addGap(14, 14, 14)
+                .addComponent(btnEditarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(btnGuardarJ)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminarJ))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(170, 170, 170)
-                .addComponent(btnCancelarJ)
-                .addGap(165, 165, 165)
-                .addComponent(btnGuardarJ))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,33 +264,32 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(txtTelJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                            .addComponent(txtTelJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(txtNumPlayera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(txtNumPlayera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnSeleccionarFoto))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
+                        .addGap(3, 3, 3)
                         .addComponent(jLabel6))
+                    .addComponent(boxPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(boxPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jRadioButton1)
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jRadioButton1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addGap(2, 2, 2)
                         .addComponent(jRadioButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel3)))
-                .addGap(5, 5, 5)
+                        .addGap(2, 2, 2)
+                        .addComponent(btnSeleccionarFoto)))
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
@@ -319,15 +301,12 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
                         .addGap(3, 3, 3)
                         .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnBuscarJ)
-                    .addComponent(btnEditarJ)
-                    .addComponent(btnAgregarJ)
-                    .addComponent(btnEliminarJ))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEditarJ)
+                        .addComponent(btnGuardarJ)
+                        .addComponent(btnEliminarJ)))
                 .addGap(8, 8, 8)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancelarJ)
-                    .addComponent(btnGuardarJ)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -353,10 +332,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarJActionPerformed
 
-    private void btnAgregarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarJActionPerformed
-
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
@@ -364,9 +339,7 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox<String> boxPosicion;
-    private javax.swing.JButton btnAgregarJ;
     private javax.swing.JButton btnBuscarJ;
-    private javax.swing.JButton btnCancelarJ;
     private javax.swing.JButton btnEditarJ;
     private javax.swing.JButton btnEliminarJ;
     private javax.swing.JButton btnGuardarJ;

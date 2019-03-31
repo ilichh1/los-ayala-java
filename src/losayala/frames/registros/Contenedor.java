@@ -15,7 +15,7 @@ import javax.swing.JInternalFrame;
  */
 public class Contenedor extends javax.swing.JFrame {
     private static final Registros MAIN_FRAME = new Registros();
-    private static final RegistroAlbitro ARBITRO_FRAME = new RegistroAlbitro();
+    private static final RegistroArbitro ARBITRO_FRAME = new RegistroArbitro();
     private static final RegistroDT DIRECTOR_FRAME = new RegistroDT();
     private static final RegistroEquipo EQUIPO_FRAME = new RegistroEquipo();
     private static final RegistroGol GOL_FRAME = new RegistroGol();
@@ -32,10 +32,10 @@ public class Contenedor extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
         JInternalFrame[] allFrames = new JInternalFrame[] {
-           /* ARBITRO_FRAME,
+            ARBITRO_FRAME,
             DIRECTOR_FRAME,
             EQUIPO_FRAME,
-            GOL_FRAME,*/
+            GOL_FRAME,
             JUGADOR_FRAME,
             PARTIDO_FRAME,
             USUARIO_FRAME,
