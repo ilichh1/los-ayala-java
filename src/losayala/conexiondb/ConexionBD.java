@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import losayala.interfaces.DatabaseObject;
+import java.sql.ResultSet;
 
 /**
  *
@@ -50,42 +50,18 @@ public class ConexionBD {
         }
     }
     
-    public static String constructorConsultasInsert(String tabla, String[] columns, String[] values) {
-        // INSERT INTO `cancha`.`persona` (`nombre`, `apellido_pat`, `apellido_mat`) VALUES ('Nancy', 'Perez', 'Perez');
-        String columnsString = "";
-        String valuesString = "";
-        
-        for (String value : values) {
-            valuesString += "'" + value + "',";
+    public static Statement createStatement() {
+        try {
+            return getDataBaseConnection().createStatement();
+        } catch (SQLException ex) {
+            System.out.println("NO SE PUEDO CREAR EL OBJETO Statement");
+            System.out.println(ex.getLocalizedMessage());
         }
-        valuesString = valuesString.substring(0,valuesString.length()-1);
-        
-        for (String column : columns) {
-            columnsString += column + ",";
-        }
-        columnsString = columnsString.substring(0,columnsString.length()-1);
-        
-        String sql = "INSERT INTO " + tabla + " (" + columnsString + ") VALUES (" + valuesString + ");";
-        return sql;
+        return null;
     }
     
-    public static String constructorConsultasUpdate(String tabla, String[] columns, String[] values, String pkName, int pkValue) {
-        // INSERT INTO `cancha`.`persona` (`nombre`, `apellido_pat`, `apellido_mat`) VALUES ('Nancy', 'Perez', 'Perez');
-        String updateValues = "";
-        
-        for (int i = 0; i < values.length; i++) {
-            String value = values[i];
-            String column = columns[i];
-            
-            updateValues += column + " = " + value + ",";
-        }
-        updateValues = updateValues.substring(0,updateValues.length()-1);
-        
-        // TODO: Agregar el ID para el where
-        String sql = "UPDATE "+tabla+" SET " + updateValues + " WHERE " + pkName + " = " + pkValue;
-        return sql;
-    }
-    
+    // <editor-fold defaultstate="collapsed" desc="Outdated code">
+    /* 
     public static boolean executeQuery(String queryType, DatabaseObject obj) {
         String sqlQuery = "";
         String tableName = obj.getTableName();
@@ -126,8 +102,10 @@ public class ConexionBD {
         
         return true;
     }
-    
-    private static int getLastGeneratedId() {
+    */
+    // </editor-fold>
+
+    public static int getLastGeneratedId() {
         try {
             Statement stmt = getDataBaseConnection().createStatement();
             stmt.execute("SELECT last_insert_id();");
@@ -136,6 +114,27 @@ public class ConexionBD {
             dbLogger(ex.getLocalizedMessage());
         }
         return -1;
+    }
+    
+    public static ResultSet getTuple(String tableName, String tablePk, int rowId) {
+        Statement stmt = createStatement();
+        if (stmt == null) {
+            System.out.println("NO SE PUEDO OBTENER UN RESULT SET PARA OBTENER UNA TUPLA");
+            return null;
+        }
+        ResultSet rs = null;
+        String sql = "SELECT * FROM "+tableName+" WHERE "+tablePk+" = "+Integer.toString(rowId);
+        try {
+            stmt.execute(sql);
+            stmt.close();
+            rs = stmt.getResultSet();
+            rs.close();
+        } catch(SQLException ex) {
+            System.out.println("NO SE PUDO TRAER UNA TUPLA");
+            System.out.println(ex.getLocalizedMessage());
+            return null;
+        }
+        return rs;
     }
     
     public static void dbLogger(String msg) {

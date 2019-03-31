@@ -5,34 +5,42 @@
  */
 package losayala.objetos;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import losayala.conexiondb.ConexionBD;
 import losayala.interfaces.DatabaseObject;
 
 /**
  *
  * @author ilichh1
  */
-public abstract class Persona implements DatabaseObject {
-    public static final String TABLE_NAME = "persona";
-    public static final String PK_COLUMN_NAME = "id_persona";
-    public static final String[] COLUMNS = new String[] {
-        "nombre",
-        "apellido_pat",
-        "apellido_mat",
-        "telefono"
-    };
-    
+public class Persona implements DatabaseObject {
     private int idPersona = -1;
-    private String nombres;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private String telefono;
-
+    private String nombres = "Ningunos";
+    private String apellidoPaterno = "Ninguno";
+    private String apellidoMaterno = "Ninguno";
+    private String telefono = "0000000000";
+    
+    public Persona() {
+        idPersona = -1;
+        nombres = "Ningunos";
+        apellidoPaterno = "Ninguno";
+        apellidoMaterno = "Ninguno";
+        telefono = "0000000000";
+    }
+    
+    public Persona(int id) {
+        idPersona = id;
+        String data[];
+        try {
+            data = this.getTuple();
+            nombres = data[1];
+            apellidoPaterno = data[2];
+            apellidoMaterno = data[3];
+            telefono = data[4];
+        } catch (Exception ex) {
+            System.out.println("Inicializar Persona falló");
+            System.out.println(ex.getLocalizedMessage());
+        }
+    }
+    
     /**
      * @return the idPersona
      */
@@ -103,53 +111,30 @@ public abstract class Persona implements DatabaseObject {
         this.telefono = telefono;
     }
     
+    @Override
+    public String[] getColumnNames() {
+        return new String[] {
+            "id_persona",
+            "nombre",
+            "apellido_pat",
+            "apellido_mat",
+            "telefono",
+        };
+    }
+    
+    @Override
     public String[] toStringArray() {
         return new String[] {
+            Integer.toString(this.getIdPersona()),
             this.getNombres(),
             this.getApellidoPaterno(),
             this.getApellidoMaterno(),
             this.getTelefono()
         };
     }
-    
-    @Override
-    public boolean guardar() {
-        boolean queryResult = ConexionBD.executeQuery("insert", this);
-        return queryResult;
-    }
-
-    @Override
-    public boolean actualizar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public String getTableName() {
-        return TABLE_NAME;
-    }
-
-    @Override
-    public String getPkName() {
-        return PK_COLUMN_NAME;
-    }
-
-    @Override
-    public String[] getColumnNames() {
-        return COLUMNS;
-    }
-
-    @Override
-    public void savePk(int pk) {
-        this.setIdPersona(pk);
-    }
-
-    @Override
-    public int getPk() {
-        return this.getIdPersona();
+        return "persona";
     }
 }
