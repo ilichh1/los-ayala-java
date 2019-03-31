@@ -10,7 +10,7 @@ package losayala.frames.registros;
  * @author RENT A CENTER
  */
 public class Registros extends javax.swing.JInternalFrame {
-    private static final Contenedor CONTAINER_FRAME = new Contenedor();
+    // private static final Contenedor CONTAINER_FRAME = new Contenedor();
     
     /**
      * Creates new form Registros
@@ -269,11 +269,7 @@ public class Registros extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void btnJugadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJugadorMouseClicked
-        RegistroJugador jugadorFrame = new RegistroJugador();
-        CONTAINER_FRAME.addInternalFrame(jugadorFrame);
-        CONTAINER_FRAME.setVisible(true);
-        System.out.println("ADDED TO INTERNAL FRAME");
-        // this.setVisible(false);
+
     }//GEN-LAST:event_btnJugadorMouseClicked
 
     /**

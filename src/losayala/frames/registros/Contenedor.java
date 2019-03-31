@@ -14,6 +14,7 @@ import javax.swing.JInternalFrame;
  * @author ilichh1
  */
 public class Contenedor extends javax.swing.JFrame {
+    private static final Registros MAIN_FRAME = new Registros();
     private static final RegistroAlbitro ARBITRO_FRAME = new RegistroAlbitro();
     private static final RegistroDT DIRECTOR_FRAME = new RegistroDT();
     private static final RegistroEquipo EQUIPO_FRAME = new RegistroEquipo();
@@ -36,8 +37,9 @@ public class Contenedor extends javax.swing.JFrame {
             EQUIPO_FRAME,
             GOL_FRAME,*/
             JUGADOR_FRAME,
-            //PARTIDO_FRAME,
-            //USUARIO_FRAME
+            PARTIDO_FRAME,
+            USUARIO_FRAME,
+            MAIN_FRAME
         };
         
         addAllInternalFrames(allFrames);
