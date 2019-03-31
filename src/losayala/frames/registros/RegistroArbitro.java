@@ -49,7 +49,6 @@ public class RegistroArbitro extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jRadioButton2 = new javax.swing.JRadioButton();
 
-        setClosable(true);
         setIconifiable(true);
         setTitle("Registro Albitro");
 

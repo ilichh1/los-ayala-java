@@ -44,18 +44,12 @@ public class RegistroGol extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
-        setClosable(true);
         setIconifiable(true);
         setResizable(true);
         setTitle("Registro Goles");
-        getContentPane().setLayout(null);
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel4.setText("Buscar por Partido");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(10, 102, 150, 19);
-        getContentPane().add(txtbuscarJE);
-        txtbuscarJE.setBounds(10, 130, 220, 20);
 
         btnBuscarJE.setText("Buscar");
         btnBuscarJE.addActionListener(new java.awt.event.ActionListener() {
@@ -63,14 +57,8 @@ public class RegistroGol extends javax.swing.JInternalFrame {
                 btnBuscarJEActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBuscarJE);
-        btnBuscarJE.setBounds(250, 130, 65, 23);
 
         btnEliminarJE.setText("Eliminar");
-        getContentPane().add(btnEliminarJE);
-        btnEliminarJE.setBounds(480, 130, 69, 23);
-        getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(142, 110, 410, 10);
 
         tableJugadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,32 +92,16 @@ public class RegistroGol extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(tableJugadores);
 
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(10, 161, 540, 215);
-
         jButton8.setText("Guardar");
-        getContentPane().add(jButton8);
-        jButton8.setBounds(400, 130, 71, 23);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel1.setText("Gol");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 11, 25, 19);
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Jugador:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 70, 52, 16);
-        getContentPane().add(SpinnerTiempo);
-        SpinnerTiempo.setBounds(410, 70, 55, 20);
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel5.setText("Minuto:");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(350, 70, 42, 16);
-
-        getContentPane().add(ComboBoxJugadorGol);
-        ComboBoxJugadorGol.setBounds(70, 70, 233, 20);
 
         jButton1.setText("Editar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -137,16 +109,78 @@ public class RegistroGol extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(320, 130, 61, 23);
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel3.setText("Partido:");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(10, 40, 50, 16);
 
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(70, 40, 460, 20);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(8, 8, 8)
+                        .addComponent(ComboBoxJugadorGol, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(SpinnerTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtbuscarJE, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btnBuscarJE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jButton1)
+                        .addGap(9, 9, 9)
+                        .addComponent(jButton8)
+                        .addGap(9, 9, 9)
+                        .addComponent(btnEliminarJE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel1)
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(ComboBoxJugadorGol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(SpinnerTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtbuscarJE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarJE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton8)
+                    .addComponent(btnEliminarJE))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
