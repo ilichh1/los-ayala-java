@@ -31,13 +31,13 @@ public class Contenedor extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
         JInternalFrame[] allFrames = new JInternalFrame[] {
-            ARBITRO_FRAME,
+           /* ARBITRO_FRAME,
             DIRECTOR_FRAME,
             EQUIPO_FRAME,
-            GOL_FRAME,
+            GOL_FRAME,*/
             JUGADOR_FRAME,
-            PARTIDO_FRAME,
-            USUARIO_FRAME
+            //PARTIDO_FRAME,
+            //USUARIO_FRAME
         };
         
         addAllInternalFrames(allFrames);
