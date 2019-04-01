@@ -28,8 +28,8 @@ public class Jugador implements DatabaseObject {
     };
     
     private int idJugador = -1;
-    private String foto = "";
     private int numeroPlayera = -1;
+    private String foto = "";
     private int posicion = -1;
     public Persona persona = new Persona();
     
@@ -39,6 +39,7 @@ public class Jugador implements DatabaseObject {
     
     public Jugador(int id) {
         idJugador = id;
+        persona = new Persona(id);
     }
     
     /**
@@ -87,6 +88,7 @@ public class Jugador implements DatabaseObject {
      * @return the posicion
      */
     public String getPosicion() {
+        if (posicion == -1) return "SIN POSICION";
         return POSICIONES[posicion];
     }
 
@@ -107,7 +109,6 @@ public class Jugador implements DatabaseObject {
         return new String[] {
             "id_jugador",
             "num_playera",
-            "id_persona",
             "posicion"
         };
     }
@@ -117,7 +118,6 @@ public class Jugador implements DatabaseObject {
         return new String[] {
             Integer.toString(getIdJugador()),
             Integer.toString(getNumeroPlayera()),
-            Integer.toString(persona.getIdPersona()),
             getPosicion(),
         };
     }

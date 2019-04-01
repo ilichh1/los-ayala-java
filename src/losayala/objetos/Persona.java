@@ -17,13 +17,10 @@ public class Persona implements DatabaseObject {
     private String apellidoPaterno = "Ninguno";
     private String apellidoMaterno = "Ninguno";
     private String telefono = "0000000000";
+    private int idTipo = -1;
     
     public Persona() {
-        idPersona = -1;
-        nombres = "Ningunos";
-        apellidoPaterno = "Ninguno";
-        apellidoMaterno = "Ninguno";
-        telefono = "0000000000";
+        
     }
     
     public Persona(int id) {
@@ -35,6 +32,7 @@ public class Persona implements DatabaseObject {
             apellidoPaterno = data[2];
             apellidoMaterno = data[3];
             telefono = data[4];
+            idTipo = Integer.parseInt(data[5]);
         } catch (Exception ex) {
             System.out.println("Inicializar Persona falló");
             System.out.println(ex.getLocalizedMessage());
@@ -111,6 +109,20 @@ public class Persona implements DatabaseObject {
         this.telefono = telefono;
     }
     
+    /**
+     * @return the idTipo
+     */
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    /**
+     * @param idTipo the idTipo to set
+     */
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
+    
     @Override
     public String[] getColumnNames() {
         return new String[] {
@@ -119,6 +131,7 @@ public class Persona implements DatabaseObject {
             "apellido_pat",
             "apellido_mat",
             "telefono",
+            "id_tipo"
         };
     }
     
@@ -129,7 +142,8 @@ public class Persona implements DatabaseObject {
             this.getNombres(),
             this.getApellidoPaterno(),
             this.getApellidoMaterno(),
-            this.getTelefono()
+            this.getTelefono(),
+            Integer.toString(this.getIdTipo()),
         };
     }
 
