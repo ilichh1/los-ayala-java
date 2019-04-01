@@ -6,12 +6,19 @@
 package losayala.frames.registros;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import losayala.interfaces.CustomInternalFrame;
+import losayala.objetos.ControladorJugadores;
 import losayala.objetos.Jugador;
 
 /**
@@ -19,7 +26,10 @@ import losayala.objetos.Jugador;
  * @author RENT A CENTER
  */
 public class RegistroJugador extends CustomInternalFrame {
+    private static final ControladorJugadores CONTROLADOR_JUGADORES = new ControladorJugadores();
     private Jugador currentJugador = new Jugador();
+    private int jugadorIdToEdit = -1;
+    private boolean isEditMode = false;
 
     /**
      * Creates new form RegistroJugador
@@ -32,8 +42,30 @@ public class RegistroJugador extends CustomInternalFrame {
     private void customInitComponentes() {
         DefaultComboBoxModel<String> posiciones = new DefaultComboBoxModel<>(Jugador.POSICIONES);
         posicionBox.setModel(posiciones);
-        sexoGroup.add(radioMasculino);
-        sexoGroup.add(radioFemenino);
+        editBtn.setEnabled(false);
+        updateTableModel();
+        
+        jugadoresTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jugadoresTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                tableRowSelected();
+            }
+        });
+    }
+    
+    private void tableRowSelected() {
+        jugadorIdToEdit = Integer.parseInt((String) jugadoresTable.getValueAt(jugadoresTable.getSelectedRow(), 0));
+        editBtn.setEnabled(true);
+    }
+    
+    public void updateTableModel() {
+        CONTROLADOR_JUGADORES.initJugadores();
+        DefaultTableModel dataModel = new DefaultTableModel(
+                CONTROLADOR_JUGADORES.toBidimensionalStringArray(),
+                ControladorJugadores.getColumnNames()
+        );
+        jugadoresTable.setModel(dataModel);
     }
     
     private void saveJugadorData() {
@@ -51,12 +83,41 @@ public class RegistroJugador extends CustomInternalFrame {
         currentJugador.setNumeroPlayera(playera);
     }
     
+    private void updateForm() {
+        nombreTxt.setText(currentJugador.persona.getNombres());
+        aPaternoTxt.setText(currentJugador.persona.getApellidoPaterno());
+        aMaternoTxt.setText(currentJugador.persona.getApellidoMaterno());
+        telefonoTxt.setText(currentJugador.persona.getTelefono());
+        playeraSpinner.setValue(currentJugador.getNumeroPlayera());
+        posicionBox.setSelectedItem(currentJugador.getPosicion());
+        updateImage();
+    }
+    
+    private void clearForm() {
+        nombreTxt.setText(null);
+        aPaternoTxt.setText(null);
+        aMaternoTxt.setText(null);
+        telefonoTxt.setText(null);
+        playeraSpinner.setValue(1);
+        posicionBox.setSelectedItem(Jugador.NO_POSITION);
+        updateImage(0);
+    }
+    
     private void updateImage() {
+        BufferedImage img = currentJugador.getFotografia();
+        if (img == null) {
+            fotoLabel.setIcon(null);
+            return;
+        }
         Image resizedImg = currentJugador.getFotografia().getScaledInstance(
                     fotoLabel.getWidth(),
                     fotoLabel.getHeight(),
                     Image.SCALE_SMOOTH);
         fotoLabel.setIcon(new ImageIcon(resizedImg));
+    }
+    
+    private void updateImage(int nullNo) {
+        fotoLabel.setIcon(null);
     }
 
     /**
@@ -78,9 +139,8 @@ public class RegistroJugador extends CustomInternalFrame {
         aPaternoTxt = new javax.swing.JTextField();
         aMaternoTxt = new javax.swing.JTextField();
         telefonoTxt = new javax.swing.JTextField();
-        btnGuardarJ = new javax.swing.JButton();
+        guardarBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         posicionBox = new javax.swing.JComboBox<>();
         fotoLabel = new javax.swing.JLabel();
         btnSeleccionarFoto = new javax.swing.JButton();
@@ -89,12 +149,10 @@ public class RegistroJugador extends CustomInternalFrame {
         btnBuscarJ = new javax.swing.JButton();
         btnEliminarJ = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableJugadores = new javax.swing.JTable();
-        btnEditarJ = new javax.swing.JButton();
+        jugadoresTable = new javax.swing.JTable();
+        editBtn = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        radioMasculino = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        radioFemenino = new javax.swing.JRadioButton();
         playeraSpinner = new javax.swing.JSpinner();
 
         setIconifiable(true);
@@ -133,18 +191,15 @@ public class RegistroJugador extends CustomInternalFrame {
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel10.setText("Apellido Materno:");
 
-        btnGuardarJ.setText("Guardar");
-        btnGuardarJ.addActionListener(new java.awt.event.ActionListener() {
+        guardarBtn.setText("Guardar");
+        guardarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarJActionPerformed(evt);
+                guardarBtnActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setText("Numero de Playera:");
-
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        jLabel3.setText("Sexo:");
 
         posicionBox.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         posicionBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Portero ", "Defensa", "Medio", "Delantero" }));
@@ -165,7 +220,7 @@ public class RegistroJugador extends CustomInternalFrame {
 
         btnEliminarJ.setText("Eliminar");
 
-        tableJugadores.setModel(new javax.swing.table.DefaultTableModel(
+        jugadoresTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -195,21 +250,17 @@ public class RegistroJugador extends CustomInternalFrame {
                 "Nombre", "Apellido Paterno", "Apellido Materno", "Teléfono", "Playera", "Posición"
             }
         ));
-        jScrollPane2.setViewportView(tableJugadores);
+        jScrollPane2.setViewportView(jugadoresTable);
 
-        btnEditarJ.setText("Editar");
-
-        radioMasculino.setText("Masculino");
+        editBtn.setText("Editar");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel6.setText("Posición:");
-
-        radioFemenino.setText("Femenino");
-        radioFemenino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioFemeninoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -224,74 +275,69 @@ public class RegistroJugador extends CustomInternalFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(btnBuscarJ)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnEditarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(btnGuardarJ)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarJ))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(posicionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radioMasculino)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioFemenino)))
+                        .addComponent(posicionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(78, 78, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(playeraSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(16, 16, 16)
+                                        .addComponent(btnBuscarJ)
+                                        .addGap(14, 14, 14)
+                                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(guardarBtn)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnEliminarJ)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addContainerGap()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(playeraSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addGap(86, 86, 86))
+                                            .addContainerGap()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addComponent(jLabel8)
+                                                    .addGap(86, 86, 86))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel10)
+                                                    .addGap(34, 34, 34))))
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel10)
-                                            .addGap(34, 34, 34))))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(11, 11, 11)
-                                    .addComponent(jLabel9)
-                                    .addGap(33, 33, 33)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel7)
-                                .addGap(92, 92, 92)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nombreTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                                .addGap(5, 5, 5))
-                            .addComponent(aPaternoTxt)
-                            .addComponent(aMaternoTxt)
-                            .addComponent(telefonoTxt))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fotoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSeleccionarFoto, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(39, 39, 39))
+                                            .addGap(11, 11, 11)
+                                            .addComponent(jLabel9)
+                                            .addGap(33, 33, 33)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(jLabel7)
+                                        .addGap(92, 92, 92)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(nombreTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                                        .addGap(5, 5, 5))
+                                    .addComponent(aPaternoTxt)
+                                    .addComponent(aMaternoTxt)
+                                    .addComponent(telefonoTxt))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fotoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSeleccionarFoto, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,16 +368,9 @@ public class RegistroJugador extends CustomInternalFrame {
                     .addComponent(playeraSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSeleccionarFoto))
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(posicionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radioMasculino)
-                            .addComponent(jLabel3)
-                            .addComponent(radioFemenino))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(posicionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -344,11 +383,11 @@ public class RegistroJugador extends CustomInternalFrame {
                         .addComponent(btnBuscarJ)
                         .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEditarJ)
-                        .addComponent(btnGuardarJ)
+                        .addComponent(editBtn)
+                        .addComponent(guardarBtn)
                         .addComponent(btnEliminarJ)))
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -361,15 +400,11 @@ public class RegistroJugador extends CustomInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void radioFemeninoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFemeninoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_radioFemeninoActionPerformed
-
-    private void btnGuardarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarJActionPerformed
+    private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         // GUARDAR O ACTUALIZAR USUARIO
         saveJugadorData();
         System.out.println("El jugador con ID: "+currentJugador.getIdJugador()+" se guardó con: "+currentJugador.save());
-    }//GEN-LAST:event_btnGuardarJActionPerformed
+    }//GEN-LAST:event_guardarBtnActionPerformed
 
     private void deiconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_deiconified
         // TODO add your handling code here:
@@ -386,20 +421,41 @@ public class RegistroJugador extends CustomInternalFrame {
         }
     }//GEN-LAST:event_btnSeleccionarFotoActionPerformed
 
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        if (jugadorIdToEdit == -1) return;
+        
+        if (!isEditMode) {
+            isEditMode = true;
+            editBtn.setText("Actualizar");
+            currentJugador = new Jugador(jugadorIdToEdit);
+            guardarBtn.setEnabled(false);
+            updateForm();
+        } else {
+            isEditMode = false;
+            guardarBtn.setEnabled(true);
+            editBtn.setText("Editar");
+            int res = JOptionPane.showConfirmDialog(this, "¿Seguro que desea editar?");
+            if (res == JOptionPane.OK_OPTION) {
+                currentJugador.edit();
+                clearForm();
+            }
+            
+        }
+    }//GEN-LAST:event_editBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField aMaternoTxt;
     private javax.swing.JTextField aPaternoTxt;
     private javax.swing.JButton btnBuscarJ;
-    private javax.swing.JButton btnEditarJ;
     private javax.swing.JButton btnEliminarJ;
-    private javax.swing.JButton btnGuardarJ;
     private javax.swing.JButton btnSeleccionarFoto;
+    private javax.swing.JButton editBtn;
     private javax.swing.JLabel fotoLabel;
+    private javax.swing.JButton guardarBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -407,13 +463,11 @@ public class RegistroJugador extends CustomInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jugadoresTable;
     private javax.swing.JTextField nombreTxt;
     private javax.swing.JSpinner playeraSpinner;
     public javax.swing.JComboBox<String> posicionBox;
-    private javax.swing.JRadioButton radioFemenino;
-    private javax.swing.JRadioButton radioMasculino;
     private javax.swing.ButtonGroup sexoGroup;
-    private javax.swing.JTable tableJugadores;
     private javax.swing.JTextField telefonoTxt;
     private javax.swing.JTextField txtbuscarJ;
     // End of variables declaration//GEN-END:variables

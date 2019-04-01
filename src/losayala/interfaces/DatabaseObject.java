@@ -7,7 +7,7 @@ package losayala.interfaces;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
+import java.util.ArrayList;
 import losayala.conexiondb.ConexionBD;
 
 /**
@@ -140,4 +140,5 @@ public interface DatabaseObject {
         
         return updateSqlString;
     }
+    
 }

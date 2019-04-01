@@ -7,6 +7,7 @@ package losayala.objetos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import losayala.conexiondb.ConexionBD;
 import losayala.interfaces.DatabaseObject;
 import losayala.utilierias.ImageUtils;
@@ -32,7 +33,7 @@ public class Jugador implements DatabaseObject {
     
     private int idJugador = -1;
     private int numeroPlayera = -1;
-    private int posicion = -1;
+    private String posicion = "Sin posicion";
     private String fotografia = "";
     public Persona persona = new Persona();
     
@@ -43,6 +44,16 @@ public class Jugador implements DatabaseObject {
     public Jugador(int id) {
         idJugador = id;
         persona = new Persona(id);
+        String[] data;
+        try {
+            data = this.getTuple();
+            numeroPlayera = Integer.parseInt(data[1]);
+            posicion = data[2];
+            fotografia = data[3];
+        } catch (Exception e) {
+            System.out.println("No se pudo inicializar Jugador.");
+            System.out.println(e.getLocalizedMessage());
+        }
     }
     
     /**
@@ -77,30 +88,26 @@ public class Jugador implements DatabaseObject {
      * @return the posicion
      */
     public String getPosicion() {
-        if (posicion == -1) return "SIN POSICION";
-        return POSICIONES[posicion];
+        return posicion;
     }
 
     /**
      * @param posicion the posicion to set
      */
     public void setPosicion(String pos) {
-        int posIndex = -1;
-        for (int i = 0; i < POSICIONES.length; i++) {
-            String string = POSICIONES[i];
-            if (pos.equals(string)) posIndex = i;
-        }
-        if (posIndex == -1) {
-            posicion = 0;
-        }
-        posicion = posIndex;
+        posicion = pos;
     }
 
     /**
      * @return the fotografia
      */
     public BufferedImage getFotografia() {
-        return ImageUtils.fromBase64(fotografia);
+        try {
+            return ImageUtils.fromBase64(fotografia);
+        } catch(Exception e) {
+            System.out.println("NO TIENE FOTOGRAFIA EL JUGADOR "+this.getIdJugador());
+            return null;
+        }
     }
 
     /**
@@ -143,5 +150,13 @@ public class Jugador implements DatabaseObject {
         this.setIdJugador(lastId);
         boolean isJugadorSaved = DatabaseObject.super.save();
         return isPersonaSaved && isJugadorSaved;
+    }
+    
+    public static Jugador[] getAll() {
+        ArrayList<Jugador> objetos = new ArrayList<>();
+        for (Integer id : ConexionBD.getAllIds("jugador","id_jugador")) {
+            objetos.add(new Jugador((int)id));
+        }
+        return objetos.toArray(new Jugador[objetos.size()]);
     }
 }

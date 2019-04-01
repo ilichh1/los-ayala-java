@@ -6,8 +6,6 @@
 package losayala.frames.registros;
 
 import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -17,6 +15,7 @@ import javax.swing.JOptionPane;
  * @author ilichh1
  */
 public final class Contenedor extends javax.swing.JFrame {
+    private static Reportes REPORTES_FRAME = new Reportes();
     private static final Registros MAIN_FRAME = new Registros();
     private static final RegistroArbitro ARBITRO_FRAME = new RegistroArbitro();
     private static final RegistroDT DIRECTOR_FRAME = new RegistroDT();
@@ -139,6 +138,7 @@ public final class Contenedor extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOS AYALA");
@@ -159,6 +159,14 @@ public final class Contenedor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Reportes");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -185,9 +193,14 @@ public final class Contenedor extends javax.swing.JFrame {
         if (res == 0) System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        REPORTES_FRAME.setVisible(true);
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables

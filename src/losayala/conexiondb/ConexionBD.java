@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import losayala.interfaces.DatabaseObject;
 
 /**
@@ -17,7 +18,7 @@ import losayala.interfaces.DatabaseObject;
  * @author ilichh1
  */
 public class ConexionBD {
-    private static final String DATABASE_URL = "localhost"; // 192.168.1.111
+    private static final String DATABASE_URL = "localhost"; // 192.168.50.230
     private static final String DATABASE_PORT = "8889"; // 3306 por default..
     private static final String DATABASE_NAME = "losayala";
     private static final String DATABASE_USERNAME = "root";
@@ -172,6 +173,44 @@ public class ConexionBD {
             System.out.println(e.getLocalizedMessage());
         }
         return id;
+    }
+    
+    public static Integer[] getAllIds(DatabaseObject dbObj) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sql = "SELECT "+dbObj.getColumnNames()[0]+" FROM "+dbObj.getTableName()+";";
+        Statement stmt = createStatement();
+        
+        try {
+            stmt.execute(sql);
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                ids.add(rs.getInt(1));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+            dbLogger("No se pudieron traer los ids de la tabla "+dbObj.getTableName());
+        }
+        
+        return ids.toArray(new Integer[ids.size()]);
+    }
+    
+    public static Integer[] getAllIds(String tableName, String pkName) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sql = "SELECT "+pkName+" FROM "+tableName+";";
+        Statement stmt = createStatement();
+        
+        try {
+            stmt.execute(sql);
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                ids.add(rs.getInt(1));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+            dbLogger("No se pudieron traer los ids de la tabla "+tableName);
+        }
+        
+        return ids.toArray(new Integer[ids.size()]);
     }
     
 }
