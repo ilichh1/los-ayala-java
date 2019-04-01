@@ -17,7 +17,7 @@ import losayala.interfaces.DatabaseObject;
  * @author ilichh1
  */
 public class ConexionBD {
-    private static final String DATABASE_URL = "localhost"; // 192.168.1.111
+    private static final String DATABASE_URL = "localhost"; //
     private static final String DATABASE_PORT = "8889"; // 3306 por default..
     private static final String DATABASE_NAME = "losayala";
     private static final String DATABASE_USERNAME = "root";
