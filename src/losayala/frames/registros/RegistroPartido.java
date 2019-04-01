@@ -5,7 +5,9 @@
  */
 package losayala.frames.registros;
 
+import javax.swing.DefaultComboBoxModel;
 import losayala.interfaces.CustomInternalFrame;
+import losayala.objetos.Cancha;
 
 /**
  *
@@ -18,6 +20,23 @@ public class RegistroPartido extends CustomInternalFrame {
      */
     public RegistroPartido() {
         initComponents();
+        customInit();
+    }
+    
+    private void customInit() {
+        Cancha[] arregloCanchas = Cancha.getAll();
+        String[] opciones = new String[arregloCanchas.length];
+        int contador = 0;
+        for (Cancha cancha : arregloCanchas) {
+            String comboValue = cancha.getNombre()+" - "+cancha.getCosto();
+            opciones[contador] = comboValue;
+            contador++;
+        }
+        
+        DefaultComboBoxModel<String> listaDeCanchas = new DefaultComboBoxModel<>(
+                opciones
+        );
+        canchaComboBox.setModel(listaDeCanchas);
     }
 
     /**
@@ -55,7 +74,7 @@ public class RegistroPartido extends CustomInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        ComboBoxCancha = new javax.swing.JComboBox<>();
+        canchaComboBox = new javax.swing.JComboBox<>();
 
         setIconifiable(true);
         setTitle("Registro Partidos");
@@ -166,9 +185,9 @@ public class RegistroPartido extends CustomInternalFrame {
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel10.setText("Cancha:");
 
-        ComboBoxCancha.addActionListener(new java.awt.event.ActionListener() {
+        canchaComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxCanchaActionPerformed(evt);
+                canchaComboBoxActionPerformed(evt);
             }
         });
 
@@ -220,7 +239,7 @@ public class RegistroPartido extends CustomInternalFrame {
                                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton3))
-                                    .addComponent(ComboBoxCancha, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(canchaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,7 +297,7 @@ public class RegistroPartido extends CustomInternalFrame {
                                 .addComponent(jLabel7)
                                 .addComponent(ComboBoxMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ComboBoxCancha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(canchaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel10))))
                     .addComponent(jLabel6))
                 .addGap(7, 7, 7)
@@ -325,13 +344,12 @@ public class RegistroPartido extends CustomInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void ComboBoxCanchaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxCanchaActionPerformed
+    private void canchaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canchaComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxCanchaActionPerformed
+    }//GEN-LAST:event_canchaComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBoxCancha;
     private javax.swing.JComboBox<String> ComboBoxEquipoLocal;
     private javax.swing.JComboBox<String> ComboBoxEquipoVisitante;
     private javax.swing.JComboBox<String> ComboBoxHora;
@@ -340,6 +358,7 @@ public class RegistroPartido extends CustomInternalFrame {
     private javax.swing.JTable TablePartidos;
     private javax.swing.JButton btnBuscarEquipo;
     private javax.swing.JButton btnGuardarP;
+    private javax.swing.JComboBox<String> canchaComboBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
