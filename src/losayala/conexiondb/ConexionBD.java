@@ -16,9 +16,9 @@ import java.sql.ResultSet;
  * @author ilichh1
  */
 public class ConexionBD {
-    private static final String DATABASE_URL = "localhost";
+    private static final String DATABASE_URL = "localhost"; // 192.168.1.111
     private static final String DATABASE_PORT = "8889"; // 3306 por default..
-    private static final String DATABASE_NAME = "cancha";
+    private static final String DATABASE_NAME = "losayala";
     private static final String DATABASE_USERNAME = "root";
     private static final String DATABASE_PASSWORD = "root";
     
@@ -116,25 +116,31 @@ public class ConexionBD {
         return -1;
     }
     
-    public static ResultSet getTuple(String tableName, String tablePk, int rowId) {
+    public static String[] getTuple(String tableName, String tablePk, int rowId) {
         Statement stmt = createStatement();
         if (stmt == null) {
             System.out.println("NO SE PUEDO OBTENER UN RESULT SET PARA OBTENER UNA TUPLA");
             return null;
         }
-        ResultSet rs = null;
+        ResultSet rs;
         String sql = "SELECT * FROM "+tableName+" WHERE "+tablePk+" = "+Integer.toString(rowId);
         try {
             stmt.execute(sql);
-            stmt.close();
             rs = stmt.getResultSet();
+            rs.next();
+            int columns = rs.getMetaData().getColumnCount();
+            String[] rsArray = new String[columns];
+            for (int i = 0; i < columns; i++) {
+                rsArray[i] = rs.getString(i + 1);
+            }
             rs.close();
+            stmt.close();
+            return rsArray;
         } catch(SQLException ex) {
             System.out.println("NO SE PUDO TRAER UNA TUPLA");
             System.out.println(ex.getLocalizedMessage());
             return null;
         }
-        return rs;
     }
     
     public static void dbLogger(String msg) {
