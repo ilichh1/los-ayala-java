@@ -53,7 +53,7 @@ public class Registros extends javax.swing.JInternalFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registros");
 
         btnDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/AL.png"))); // NOI18N
@@ -98,7 +98,7 @@ public class Registros extends javax.swing.JInternalFrame {
         jLabel5.setText("Jugador");
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        jLabel6.setText("Albitro");
+        jLabel6.setText("Arbitro");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/EQ.png"))); // NOI18N
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -115,6 +115,11 @@ public class Registros extends javax.swing.JInternalFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/GOL.png"))); // NOI18N
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.setSelected(true);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel8.setText("Equipo");
@@ -122,6 +127,11 @@ public class Registros extends javax.swing.JInternalFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/VS.png"))); // NOI18N
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.setSelected(true);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel9.setText("Gol");
@@ -244,16 +254,15 @@ public class Registros extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDTActionPerformed
-        RegistroDT registroDt = new RegistroDT();
-        registroDt.setVisible(true);
+        Contenedor.expand("DIRECTOR_FRAME");
     }//GEN-LAST:event_btnDTActionPerformed
 
     private void btnJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorActionPerformed
-        // TODO add your handling code here:
+        Contenedor.expand("JUGADOR_FRAME");
     }//GEN-LAST:event_btnJugadorActionPerformed
 
     private void btnAlbitroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbitroActionPerformed
-        // TODO add your handling code here:
+        Contenedor.expand("ARBITRO_FRAME");
     }//GEN-LAST:event_btnAlbitroActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -261,7 +270,7 @@ public class Registros extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Contenedor.expand("EQUIPO_FRAME");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -271,6 +280,14 @@ public class Registros extends javax.swing.JInternalFrame {
     private void btnJugadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJugadorMouseClicked
 
     }//GEN-LAST:event_btnJugadorMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Contenedor.expand("GOL_FRAME");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Contenedor.expand("PARTIDO_FRAME");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

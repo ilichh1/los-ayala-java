@@ -5,11 +5,13 @@
  */
 package losayala.frames.registros;
 
+import losayala.interfaces.CustomInternalFrame;
+
 /**
  *
  * @author RENT A CENTER
  */
-public class RegistroDT extends javax.swing.JInternalFrame {
+public class RegistroDT extends CustomInternalFrame {
 
     /**
      * Creates new form RegistroDT

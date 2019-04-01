@@ -6,13 +6,14 @@
 package losayala.frames.registros;
 
 import javax.swing.DefaultComboBoxModel;
+import losayala.interfaces.CustomInternalFrame;
 import losayala.objetos.Jugador;
 
 /**
  *
  * @author RENT A CENTER
  */
-public class RegistroJugador extends javax.swing.JInternalFrame {
+public class RegistroJugador extends CustomInternalFrame {
 
     /**
      * Creates new form RegistroJugador
@@ -66,6 +67,23 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Registro Jugador");
         setToolTipText("");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+                deiconified(evt);
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel2.setText("Jugador");
@@ -302,6 +320,10 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         // GUARDAR O ACTUALIZAR USUARIO
         
     }//GEN-LAST:event_btnGuardarJActionPerformed
+
+    private void deiconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_deiconified
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deiconified
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
