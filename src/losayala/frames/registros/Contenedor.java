@@ -43,8 +43,9 @@ public final class Contenedor extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
         addAllInternalFrames(ALL_FRAMES);
+        addInternalFrame(REPORTES_FRAME, new int[] {300, 45});
         addInternalFrame(MAIN_FRAME, new int[] { 200, 50 });
-        // this.setUndecorated(true);
+        REPORTES_FRAME.hide();
         iconifyAll();
     }
     
@@ -135,6 +136,7 @@ public final class Contenedor extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -147,6 +149,10 @@ public final class Contenedor extends javax.swing.JFrame {
         desktopPane.setBackground(new java.awt.Color(16, 129, 14));
         desktopPane.setBounds(new java.awt.Rectangle(0, 0, 500, 500));
         desktopPane.setLayout(null);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/inicio/fondo-cancha.jpg"))); // NOI18N
+        desktopPane.add(jLabel1);
+        jLabel1.setBounds(0, 0, 610, 530);
 
         jMenu1.setText("Archivo");
 
@@ -161,9 +167,9 @@ public final class Contenedor extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Reportes");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
             }
         });
         jMenuBar1.add(jMenu2);
@@ -193,12 +199,13 @@ public final class Contenedor extends javax.swing.JFrame {
         if (res == 0) System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         REPORTES_FRAME.setVisible(true);
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

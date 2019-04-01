@@ -69,18 +69,33 @@ public class RegistroJugador extends CustomInternalFrame {
     }
     
     private void saveJugadorData() {
+        // Instancia
         String nombre = nombreTxt.getText();
         String aMaterno = aMaternoTxt.getText();
         String aPaterno = aPaternoTxt.getText();
         String telefono = telefonoTxt.getText();
         String posicion = (String)posicionBox.getSelectedItem();
         int playera = (int)playeraSpinner.getValue();
+        // Asigna
         currentJugador.persona.setNombres(nombre);
         currentJugador.persona.setApellidoMaterno(aMaterno);
         currentJugador.persona.setApellidoPaterno(aPaterno);
         currentJugador.persona.setTelefono(telefono);
         currentJugador.setPosicion(posicion);
         currentJugador.setNumeroPlayera(playera);
+        // Guarda
+        boolean seGuardoJugador = currentJugador.save();
+        
+        if (seGuardoJugador) {
+            JOptionPane.showMessageDialog(this, "Se guardo con exito el jugador");
+        } else {
+            Object[] options = { "OK" };
+            int res = JOptionPane.showOptionDialog(null, "No se pudo guardar el jugador", "Atención",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+        }
+        
+        clearForm();
     }
     
     private void updateForm() {
@@ -94,6 +109,7 @@ public class RegistroJugador extends CustomInternalFrame {
     }
     
     private void clearForm() {
+        currentJugador = new Jugador();
         nombreTxt.setText(null);
         aPaternoTxt.setText(null);
         aMaternoTxt.setText(null);
@@ -101,6 +117,7 @@ public class RegistroJugador extends CustomInternalFrame {
         playeraSpinner.setValue(1);
         posicionBox.setSelectedItem(Jugador.NO_POSITION);
         updateImage(0);
+        updateTableModel();
     }
     
     private void updateImage() {
@@ -403,7 +420,6 @@ public class RegistroJugador extends CustomInternalFrame {
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         // GUARDAR O ACTUALIZAR USUARIO
         saveJugadorData();
-        System.out.println("El jugador con ID: "+currentJugador.getIdJugador()+" se guardó con: "+currentJugador.save());
     }//GEN-LAST:event_guardarBtnActionPerformed
 
     private void deiconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_deiconified

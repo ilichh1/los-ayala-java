@@ -5,7 +5,9 @@
  */
 package losayala;
 
+import javax.swing.JOptionPane;
 import losayala.frames.inicio.Inicio;
+import losayala.objetos.Cancha;
 
 /**
  *
@@ -19,6 +21,24 @@ public class LosAyala {
     public static void main(String[] args) {
         Inicio primerFrame = new Inicio();
         primerFrame.setVisible(true);
+//        Cancha canchaGatorade = new Cancha(6);
+//        for (String string : canchaGatorade.toStringArray()) {
+//            System.out.println(string);
+//        }
+//        
+//        Cancha nuevaCancha = new Cancha();
+//        nuevaCancha.setNombre("La Quiubole");
+//        nuevaCancha.setCosto(830);
+//        boolean seGuardoLaCancha = nuevaCancha.save();
+//        
+//        if (seGuardoLaCancha) {
+//            JOptionPane.showMessageDialog(null, "Se guardo exitosamente la cancha");
+//        } else {
+//            Object[] options = { "OK" };
+//            int res = JOptionPane.showOptionDialog(null, "NO SE PUDO GUARDAR LA CANCHA", "ERROR",
+//            JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE,
+//            null, options, options[0]);
+//        }
     }
     
 }
