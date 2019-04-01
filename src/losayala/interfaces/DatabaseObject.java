@@ -7,7 +7,6 @@ package losayala.interfaces;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
 import losayala.conexiondb.ConexionBD;
 
 /**
@@ -20,9 +19,21 @@ public interface DatabaseObject {
     public String[] toStringArray();
     
     public default boolean save() {
-        String sqlToExecute= generateInsertQuery(this.getTableName(),
-                                                this.getColumnNames(),
-                                                this.toStringArray());
+        String saveSql = "";
+        int pkValue = Integer.parseInt(this.toStringArray()[0]);
+        try {
+            if (pkValue == -1 ) {
+                saveSql = generateInsertQuery(this.getTableName(),
+                                          this.getColumnNames(),
+                                          this.toStringArray());
+            } else {
+                saveSql = genereateUpdateQuery(this.getTableName(),
+                                          this.getColumnNames(),
+                                          this.toStringArray());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
         // Crear Statement para mandar querys a la DB
         Statement stmt = ConexionBD.createStatement();
         if (stmt == null) {
@@ -32,7 +43,7 @@ public interface DatabaseObject {
         
         try {
             // Ejecutar query
-            stmt.execute(sqlToExecute);
+            stmt.execute(saveSql);
         } catch (SQLException ex) {
             System.out.println("NO SE PUDO EJECUTAR SQL EN DataBaseObject");
             System.out.println(ex.getLocalizedMessage());
@@ -51,44 +62,33 @@ public interface DatabaseObject {
     }
     
     public default String[] getTuple() throws Exception {
-        String[] stringToReturn = null;
         String tableName = getTableName();
         String pkName = getColumnNames()[0];
         int id = Integer.parseInt(toStringArray()[0]);
-        ResultSet rs = ConexionBD.getTuple(tableName, pkName, id);
-        if (rs == null) {
-            System.out.println("NO SE OBTUVO ResultSet PARA CONVERTIRLO A String");
-            return null;
-        }
-        try {
-            int columns = rs.getMetaData().getColumnCount();
-            stringToReturn = new String[columns];
-
-            for (int i = 0; i < columns; i++)
-                stringToReturn[columns] = rs.getString(i);
-            
-            rs.close();
-        } catch (SQLException ex) {
-            System.out.println("NO SE PUEDO ITERAR EN EL ResultSet");
-            System.out.println(ex.getLocalizedMessage());
-        }
-        if (stringToReturn.length != getColumnNames().length) {
+        String[] data = ConexionBD.getTuple(tableName, pkName, id);
+        if (data.length != getColumnNames().length) {
             throw new Exception("LAS COLUMNAS NO COINCIDEN");
         }
-        return stringToReturn;
+        return data;
     }
     
-    public static String generateInsertQuery(String tabla, String[] columns, String[] values) {
+    public static String generateInsertQuery(String tabla, String[] columns, String[] values) throws Exception {
         // INSERT INTO `cancha`.`persona` (`nombre`, `apellido_pat`, `apellido_mat`) VALUES ('Nancy', 'Perez', 'Perez');
         String columnsString = "";
         String valuesString = "";
         
-        for (String value : values) {
+        if (columns.length != values.length) {
+            throw new Exception("No se puede generar INSERT sql por error en las columnas y valores.");
+        }
+        
+        for (int i = 1; i < values.length; i++) {
+            String value = values[i];
             valuesString += "'" + value + "',";
         }
         valuesString = valuesString.substring(0,valuesString.length()-1);
         
-        for (String column : columns) {
+        for (int i = 1; i < columns.length; i++) {
+            String column = columns[i];
             columnsString += column + ",";
         }
         columnsString = columnsString.substring(0,columnsString.length()-1);
@@ -97,9 +97,25 @@ public interface DatabaseObject {
         return sql;
     }
     
-    public static String constructorConsultasUpdate(String tabla, String[] columns, String[] values, String pkName, int pkValue) {
-        // INSERT INTO `cancha`.`persona` (`nombre`, `apellido_pat`, `apellido_mat`) VALUES ('Nancy', 'Perez', 'Perez');
-        // TODO: Implement this method
-        return "NONE";
+    public static String genereateUpdateQuery(String tabla, String[] columns, String[] values) throws Exception {
+        // UPDATE `losayala`.`jugador` SET `posicion` = 'Portero' WHERE (`id_jugador` = '12');
+        int pkValue = Integer.parseInt(values[0]);
+        String pkName = columns[0];
+        
+        if (columns.length != values.length) {
+            throw new Exception("No se puede generar update query por fallo en las columnas y valores");
+        }
+        
+        String setSqlString = "";
+        for (int i = 1; i < columns.length; i++) {
+            String column = columns[i];
+            String value = "'"+values[i]+"'";
+            setSqlString += column + " = " + value + ", ";
+        }
+        setSqlString = setSqlString.substring(0,setSqlString.length()-2);
+        String whereSql = "("+pkName+" = "+pkValue+");";
+        String updateSqlString = "UPDATE "+tabla+" SET "+setSqlString+" WHERE "+whereSql;
+        
+        return updateSqlString;
     }
 }
