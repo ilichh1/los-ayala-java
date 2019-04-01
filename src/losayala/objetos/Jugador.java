@@ -7,6 +7,7 @@ package losayala.objetos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import losayala.conexiondb.ConexionBD;
 import losayala.interfaces.DatabaseObject;
 import losayala.utilierias.ImageUtils;
 
@@ -16,11 +17,13 @@ import losayala.utilierias.ImageUtils;
  */
 public class Jugador implements DatabaseObject {
     // Portero, Defensa, Medio, Delantero
+    public static final String NO_POSITION = "Sin posicion";
     public static final String PORTERO = "Portero";
     public static final String DEFENSA = "Defensa";
     public static final String MEDIO = "Medio";
     public static final String DELANTERO = "Delantero";
     public static final String[] POSICIONES = new String[] {
+        NO_POSITION,
         PORTERO,
         DEFENSA,
         MEDIO,
@@ -29,12 +32,12 @@ public class Jugador implements DatabaseObject {
     
     private int idJugador = -1;
     private int numeroPlayera = -1;
-    private String foto = "";
     private int posicion = -1;
+    private String fotografia = "";
     public Persona persona = new Persona();
     
     public Jugador() {
-        
+        persona.setIdTipo(Persona.JUGADOR);
     }
     
     public Jugador(int id) {
@@ -54,20 +57,6 @@ public class Jugador implements DatabaseObject {
      */
     public void setIdJugador(int idJugador) {
         this.idJugador = idJugador;
-    }
-
-    /**
-     * @return the foto
-     */
-    public BufferedImage getFoto() {
-        return ImageUtils.fromBase64(foto);
-    }
-
-    /**
-     * @param foto the foto to set
-     */
-    public void setFoto(File foto) {
-        this.foto = ImageUtils.toBase64(foto);
     }
 
     /**
@@ -95,8 +84,30 @@ public class Jugador implements DatabaseObject {
     /**
      * @param posicion the posicion to set
      */
-    public void setPosicion(int posicion) {
-        this.posicion = posicion;
+    public void setPosicion(String pos) {
+        int posIndex = -1;
+        for (int i = 0; i < POSICIONES.length; i++) {
+            String string = POSICIONES[i];
+            if (pos.equals(string)) posIndex = i;
+        }
+        if (posIndex == -1) {
+            posicion = 0;
+        }
+        posicion = posIndex;
+    }
+
+    /**
+     * @return the fotografia
+     */
+    public BufferedImage getFotografia() {
+        return ImageUtils.fromBase64(fotografia);
+    }
+
+    /**
+     * @param photoFile
+     */
+    public void setFotografia(File photoFile) {
+        this.fotografia = ImageUtils.toBase64(photoFile);
     }
 
     @Override
@@ -109,7 +120,8 @@ public class Jugador implements DatabaseObject {
         return new String[] {
             "id_jugador",
             "num_playera",
-            "posicion"
+            "posicion",
+            "fotografia"
         };
     }
 
@@ -119,12 +131,16 @@ public class Jugador implements DatabaseObject {
             Integer.toString(getIdJugador()),
             Integer.toString(getNumeroPlayera()),
             getPosicion(),
+            fotografia,
         };
     }
     
     @Override
     public boolean save() {
         boolean isPersonaSaved = persona.save();
+        int lastId = ConexionBD.getLastIdForTable(persona);
+        System.out.println("ULTIMO ID PARA PERSONA: "+lastId);
+        this.setIdJugador(lastId);
         boolean isJugadorSaved = DatabaseObject.super.save();
         return isPersonaSaved && isJugadorSaved;
     }

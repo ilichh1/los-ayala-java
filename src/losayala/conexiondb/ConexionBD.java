@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import losayala.interfaces.DatabaseObject;
 
 /**
  *
@@ -109,7 +110,12 @@ public class ConexionBD {
         try {
             Statement stmt = getDataBaseConnection().createStatement();
             stmt.execute("SELECT last_insert_id();");
-            return stmt.getResultSet().getInt(0);
+            ResultSet rs = stmt.getResultSet();
+            rs.next();
+            int id = rs.getInt(1);
+            rs.close();
+            stmt.close();
+            return id;
         } catch (SQLException ex) {
             dbLogger(ex.getLocalizedMessage());
         }
@@ -145,6 +151,27 @@ public class ConexionBD {
     
     public static void dbLogger(String msg) {
         System.out.println("ERROR EN LA BASE DE DATOS: " + msg);
+    }
+    
+    public static int getLastIdForTable(DatabaseObject obj) {
+        String pkName = obj.getColumnNames()[0];
+        String tableName = obj.getTableName();
+        String sql = "SELECT MAX("+pkName+") FROM "+tableName;
+        int id = -1;
+        
+        try {
+            Statement stmt = createStatement();
+            stmt.execute(sql);
+            ResultSet rs = stmt.getResultSet();
+            rs.next();
+            id = rs.getInt(1);
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            dbLogger("No se pudo traer el ultimo id para una tabla");
+            System.out.println(e.getLocalizedMessage());
+        }
+        return id;
     }
     
 }

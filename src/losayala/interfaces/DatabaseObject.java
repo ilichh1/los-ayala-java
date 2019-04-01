@@ -7,6 +7,7 @@ package losayala.interfaces;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
 import losayala.conexiondb.ConexionBD;
 
 /**
@@ -20,17 +21,12 @@ public interface DatabaseObject {
     
     public default boolean save() {
         String saveSql = "";
+        int idGenerated = -1;
         int pkValue = Integer.parseInt(this.toStringArray()[0]);
         try {
-            if (pkValue == -1 ) {
-                saveSql = generateInsertQuery(this.getTableName(),
+            saveSql = generateInsertQuery(this.getTableName(),
                                           this.getColumnNames(),
                                           this.toStringArray());
-            } else {
-                saveSql = genereateUpdateQuery(this.getTableName(),
-                                          this.getColumnNames(),
-                                          this.toStringArray());
-            }
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
@@ -61,6 +57,25 @@ public interface DatabaseObject {
         return true;
     }
     
+    public default boolean edit() {
+        String saveSql = "";
+        int pkValue = Integer.parseInt(this.toStringArray()[0]);
+        if (pkValue == -1) {
+            System.out.println("No se puede actualizar un registro que no existe.");
+            return false;
+        }
+        try {
+            saveSql = genereateUpdateQuery(this.getTableName(),
+                                          this.getColumnNames(),
+                                          this.toStringArray());
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
+        
+        return true;
+    }
+    
     public default String[] getTuple() throws Exception {
         String tableName = getTableName();
         String pkName = getColumnNames()[0];
@@ -81,12 +96,18 @@ public interface DatabaseObject {
             throw new Exception("No se puede generar INSERT sql por error en las columnas y valores.");
         }
         
+        if (Integer.parseInt(values[0]) != -1) {
+            valuesString += "'"+values[0]+"',";
+        }
         for (int i = 1; i < values.length; i++) {
             String value = values[i];
             valuesString += "'" + value + "',";
         }
         valuesString = valuesString.substring(0,valuesString.length()-1);
         
+        if (Integer.parseInt(values[0]) != -1) {
+            columnsString += columns[0]+",";
+        }
         for (int i = 1; i < columns.length; i++) {
             String column = columns[i];
             columnsString += column + ",";
@@ -94,6 +115,7 @@ public interface DatabaseObject {
         columnsString = columnsString.substring(0,columnsString.length()-1);
         
         String sql = "INSERT INTO " + tabla + " (" + columnsString + ") VALUES (" + valuesString + ");";
+        System.out.println(sql);
         return sql;
     }
     

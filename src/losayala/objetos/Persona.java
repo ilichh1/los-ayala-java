@@ -12,6 +12,18 @@ import losayala.interfaces.DatabaseObject;
  * @author ilichh1
  */
 public class Persona implements DatabaseObject {
+    public static final int ADMINISTRADOR = 1;
+    public static final int EMPLEADO = 2;
+    public static final int ENTRENADOR = 3;
+    public static final int JUGADOR = 4;
+    public static final int ARBITRO = 5;
+    public static final int[] TIPOS = new int[] {
+        ADMINISTRADOR,
+        EMPLEADO,
+        ENTRENADOR,
+        JUGADOR,
+        ARBITRO
+    };
     private int idPersona = -1;
     private String nombres = "Ningunos";
     private String apellidoPaterno = "Ninguno";
