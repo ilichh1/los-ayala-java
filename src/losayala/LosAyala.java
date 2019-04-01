@@ -6,8 +6,6 @@
 package losayala;
 
 import losayala.frames.inicio.Inicio;
-import losayala.frames.registros.RegistroJugador;
-import losayala.objetos.Arbitro;
 
 /**
  *
