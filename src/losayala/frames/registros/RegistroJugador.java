@@ -5,6 +5,9 @@
  */
 package losayala.frames.registros;
 
+import javax.swing.DefaultComboBoxModel;
+import losayala.objetos.Jugador;
+
 /**
  *
  * @author RENT A CENTER
@@ -16,6 +19,11 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
      */
     public RegistroJugador() {
         initComponents();
+    }
+    
+    private void customInitComponentes() {
+        DefaultComboBoxModel<String> posiciones = new DefaultComboBoxModel<>(Jugador.POSICIONES);
+        boxPosicion.setModel(posiciones);
     }
 
     /**
@@ -75,12 +83,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel10.setText("Apellido Materno:");
 
-        txtNombreJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreJActionPerformed(evt);
-            }
-        });
-
         btnGuardarJ.setText("Guardar");
         btnGuardarJ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,20 +98,10 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
 
         boxPosicion.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         boxPosicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Portero ", "Defensa", "Medio", "Delantero" }));
-        boxPosicion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxPosicionActionPerformed(evt);
-            }
-        });
 
         jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
 
         btnSeleccionarFoto.setText("Seleccionar Foto");
-        btnSeleccionarFoto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeleccionarFotoActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel5.setText("Buscar Jugadores por Nombre");
@@ -151,11 +143,6 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tableJugadores);
 
         btnEditarJ.setText("Editar");
-        btnEditarJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarJActionPerformed(evt);
-            }
-        });
 
         jRadioButton1.setText("Masculino");
 
@@ -312,29 +299,14 @@ public class RegistroJugador extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreJActionPerformed
-
-    private void btnGuardarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardarJActionPerformed
-
-    private void boxPosicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxPosicionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boxPosicionActionPerformed
-
-    private void btnSeleccionarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarFotoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSeleccionarFotoActionPerformed
-
-    private void btnEditarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarJActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarJActionPerformed
-
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void btnGuardarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarJActionPerformed
+        // GUARDAR O ACTUALIZAR USUARIO
+        
+    }//GEN-LAST:event_btnGuardarJActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
