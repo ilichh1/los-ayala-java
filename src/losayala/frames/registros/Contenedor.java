@@ -22,6 +22,15 @@ public class Contenedor extends javax.swing.JFrame {
     private static final RegistroJugador JUGADOR_FRAME = new RegistroJugador();
     private static final RegistroPartido PARTIDO_FRAME = new RegistroPartido();
     private static final RegistroUsuario USUARIO_FRAME = new RegistroUsuario();
+    private static final JInternalFrame[] ALL_FRAMES = new JInternalFrame[] {
+        ARBITRO_FRAME,
+        DIRECTOR_FRAME,
+        EQUIPO_FRAME,
+        GOL_FRAME,
+        JUGADOR_FRAME,
+        PARTIDO_FRAME,
+        USUARIO_FRAME,
+    };
 
     /**
      * Creates new form Contenedor
@@ -31,19 +40,10 @@ public class Contenedor extends javax.swing.JFrame {
         this.setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         
-        JInternalFrame[] allFrames = new JInternalFrame[] {
-            ARBITRO_FRAME,
-            DIRECTOR_FRAME,
-            EQUIPO_FRAME,
-            GOL_FRAME,
-            JUGADOR_FRAME,
-            PARTIDO_FRAME,
-            USUARIO_FRAME,
-            MAIN_FRAME
-        };
-        
-        addAllInternalFrames(allFrames);
+        addAllInternalFrames(ALL_FRAMES);
+        addInternalFrame(MAIN_FRAME);
         // this.setUndecorated(true);
+        iconifyAll();
     }
     
     private void addAllInternalFrames(JInternalFrame[] frames) {
@@ -52,11 +52,27 @@ public class Contenedor extends javax.swing.JFrame {
         }
     }
     
-    public void addInternalFrame(javax.swing.JInternalFrame internalFrame) {
+    public void addInternalFrame(javax.swing.JInternalFrame internalFrame, boolean minimize) {
         desktopPane.add(internalFrame);
         // internalFrame.setLocationRelativeTo();
         internalFrame.setVisible(true);
-        internalFrame.setLocation(128, 128);
+        internalFrame.setLocation(32, 32);
+    }
+    
+    public void addInternalFrame(javax.swing.JInternalFrame internalFrame) {
+        addInternalFrame(internalFrame, false);
+    }
+    
+    public void iconifyAll() {
+        try {
+            ARBITRO_FRAME.setIcon(true);
+            JUGADOR_FRAME.setIcon(true);
+            EQUIPO_FRAME.setIcon(true);
+            USUARIO_FRAME.setIcon(true);
+            PARTIDO_FRAME.setIcon(true);
+        } catch (Exception e) {
+            System.out.println("NO SE PUDO MINIFIAR UN INTERNAL FRAME");
+        }
     }
 
     /**
