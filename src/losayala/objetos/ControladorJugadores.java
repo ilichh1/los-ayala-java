@@ -7,6 +7,7 @@ package losayala.objetos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import losayala.interfaces.SearchCondition;
 
 /**
  *
@@ -22,6 +23,22 @@ public class ControladorJugadores {
     
     public void initJugadores() {
         JUGADORES = new ArrayList<>(Arrays.asList(Jugador.getAll()));
+    }
+    
+    public void initJugadores(String searchValue) {
+        JUGADORES = new ArrayList<>(Arrays.asList(Jugador.getAll(
+                new SearchCondition(new Jugador().getColumnNames(), searchValue)
+        )));
+    }
+    
+    public void search(String searchValue) {
+        ArrayList<Jugador> searchResults = new ArrayList<>();
+        for (Jugador jugador : Arrays.asList(Jugador.getAll())) {
+            if (jugador.columnsContain(searchValue) || jugador.persona.columnsContain(searchValue)) {
+                searchResults.add(jugador);
+            }
+        }
+        JUGADORES = searchResults;
     }
     
     public String[][] toBidimensionalStringArray() {

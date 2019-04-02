@@ -7,7 +7,6 @@ package losayala.interfaces;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import losayala.conexiondb.ConexionBD;
 
 /**
@@ -18,6 +17,17 @@ public interface DatabaseObject {
     public String getTableName();
     public String[] getColumnNames();
     public String[] toStringArray();
+    
+    public default boolean columnsContain(String containValue) {
+        containValue = containValue.toLowerCase();
+        for (String string : this.toStringArray()) {
+            if (string == null) continue;
+
+            string = string.toLowerCase();
+            if (string.contains(containValue)) return true;
+        }
+        return false;
+    }
     
     public default boolean save() {
         String saveSql = "";
@@ -68,12 +78,27 @@ public interface DatabaseObject {
             saveSql = genereateUpdateQuery(this.getTableName(),
                                           this.getColumnNames(),
                                           this.toStringArray());
+            return ConexionBD.createStatement().execute(saveSql);
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
             return false;
         }
+    }
+    
+    public default boolean delete() {
+        String pkName = this.getColumnNames()[0];
+        int pkValue = Integer.parseInt(this.toStringArray()[0]);
         
-        return true;
+        String sqlQuery = "DELETE FROM "+getTableName()+" WHERE "+pkName+" = '"+pkValue+"'";
+        
+        try {
+            ConexionBD.createStatement().execute(sqlQuery);
+            return true;
+        } catch(SQLException e) {
+            System.out.println("No se pudo eliminar objeto.");
+            System.out.println(e.getLocalizedMessage());
+            return false;
+        }
     }
     
     public default String[] getTuple() throws Exception {
@@ -87,7 +112,7 @@ public interface DatabaseObject {
         return data;
     }
     
-    public static String generateInsertQuery(String tabla, String[] columns, String[] values) throws Exception {
+    private static String generateInsertQuery(String tabla, String[] columns, String[] values) throws Exception {
         // INSERT INTO `cancha`.`persona` (`nombre`, `apellido_pat`, `apellido_mat`) VALUES ('Nancy', 'Perez', 'Perez');
         String columnsString = "";
         String valuesString = "";
@@ -119,7 +144,7 @@ public interface DatabaseObject {
         return sql;
     }
     
-    public static String genereateUpdateQuery(String tabla, String[] columns, String[] values) throws Exception {
+    private static String genereateUpdateQuery(String tabla, String[] columns, String[] values) throws Exception {
         // UPDATE `losayala`.`jugador` SET `posicion` = 'Portero' WHERE (`id_jugador` = '12');
         int pkValue = Integer.parseInt(values[0]);
         String pkName = columns[0];

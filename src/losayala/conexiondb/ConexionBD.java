@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import losayala.interfaces.DatabaseObject;
+import losayala.interfaces.SearchCondition;
 
 /**
  *
@@ -200,6 +201,26 @@ public class ConexionBD {
         Statement stmt = createStatement();
         
         try {
+            stmt.execute(sql);
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                ids.add(rs.getInt(1));
+            }
+        } catch(SQLException e) {
+            System.out.println(e.getLocalizedMessage());
+            dbLogger("No se pudieron traer los ids de la tabla "+tableName);
+        }
+        
+        return ids.toArray(new Integer[ids.size()]);
+    }
+    
+    public static Integer[] getAllIds(String tableName, String pkName, SearchCondition cond) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sql = "SELECT "+pkName+" FROM "+tableName+" "+cond.getWhereCondition()+";";
+        Statement stmt = createStatement();
+        
+        try {
+            System.out.println(sql);
             stmt.execute(sql);
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {

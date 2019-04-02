@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import losayala.conexiondb.ConexionBD;
 import losayala.interfaces.DatabaseObject;
+import losayala.interfaces.SearchCondition;
 import losayala.utilierias.ImageUtils;
 
 /**
@@ -146,15 +147,29 @@ public class Jugador implements DatabaseObject {
     public boolean save() {
         boolean isPersonaSaved = persona.save();
         int lastId = ConexionBD.getLastIdForTable(persona);
-        System.out.println("ULTIMO ID PARA PERSONA: "+lastId);
         this.setIdJugador(lastId);
         boolean isJugadorSaved = DatabaseObject.super.save();
         return isPersonaSaved && isJugadorSaved;
     }
     
+    @Override
+    public boolean edit() {
+        boolean isPersonaEdited = persona.edit();
+        boolean isJugadorEdited = DatabaseObject.super.edit();
+        return isPersonaEdited && isJugadorEdited;
+    }
+    
     public static Jugador[] getAll() {
         ArrayList<Jugador> objetos = new ArrayList<>();
         for (Integer id : ConexionBD.getAllIds("jugador","id_jugador")) {
+            objetos.add(new Jugador((int)id));
+        }
+        return objetos.toArray(new Jugador[objetos.size()]);
+    }
+    
+    public static Jugador[] getAll(SearchCondition searchCond) {
+        ArrayList<Jugador> objetos = new ArrayList<>();
+        for (Integer id : ConexionBD.getAllIds("jugador","id_jugador", searchCond)) {
             objetos.add(new Jugador((int)id));
         }
         return objetos.toArray(new Jugador[objetos.size()]);

@@ -5,10 +5,37 @@
  */
 package losayala.objetos;
 
+import losayala.interfaces.DatabaseObject;
+
 /**
  *
  * @author ilichh1
  */
-public class Equipo {
+public class Equipo implements DatabaseObject {
+    
+    int idEquipo = -1;
+    String nombre = "SIN NOMBRE";
+    DirectorTecnico dt = new DirectorTecnico();
+
+    @Override
+    public String getTableName() {
+        return "equipo";
+    }
+
+    @Override
+    public String[] getColumnNames() {
+        return new String[] {
+            "id_equipo",
+            "nombre",
+            "id_dt",
+        };
+    }
+
+    @Override
+    public String[] toStringArray() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

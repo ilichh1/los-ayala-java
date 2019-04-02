@@ -55,12 +55,13 @@ public class RegistroJugador extends CustomInternalFrame {
     }
     
     private void tableRowSelected() {
+        if (jugadoresTable.getSelectedRow() == -1 ) return;
         jugadorIdToEdit = Integer.parseInt((String) jugadoresTable.getValueAt(jugadoresTable.getSelectedRow(), 0));
         editBtn.setEnabled(true);
+        eliminarBtn.setEnabled(true);
     }
     
     public void updateTableModel() {
-        CONTROLADOR_JUGADORES.initJugadores();
         DefaultTableModel dataModel = new DefaultTableModel(
                 CONTROLADOR_JUGADORES.toBidimensionalStringArray(),
                 ControladorJugadores.getColumnNames()
@@ -68,7 +69,7 @@ public class RegistroJugador extends CustomInternalFrame {
         jugadoresTable.setModel(dataModel);
     }
     
-    private void saveJugadorData() {
+    private void syncJugadorData() {
         // Instancia
         String nombre = nombreTxt.getText();
         String aMaterno = aMaternoTxt.getText();
@@ -83,6 +84,10 @@ public class RegistroJugador extends CustomInternalFrame {
         currentJugador.persona.setTelefono(telefono);
         currentJugador.setPosicion(posicion);
         currentJugador.setNumeroPlayera(playera);
+    }
+    
+    private void saveJugadorData() {
+        syncJugadorData();
         // Guarda
         boolean seGuardoJugador = currentJugador.save();
         
@@ -116,7 +121,9 @@ public class RegistroJugador extends CustomInternalFrame {
         telefonoTxt.setText(null);
         playeraSpinner.setValue(1);
         posicionBox.setSelectedItem(Jugador.NO_POSITION);
+        eliminarBtn.setEnabled(false);
         updateImage(0);
+        CONTROLADOR_JUGADORES.initJugadores();
         updateTableModel();
     }
     
@@ -162,9 +169,9 @@ public class RegistroJugador extends CustomInternalFrame {
         fotoLabel = new javax.swing.JLabel();
         btnSeleccionarFoto = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtbuscarJ = new javax.swing.JTextField();
+        buscarTxt = new javax.swing.JTextField();
         btnBuscarJ = new javax.swing.JButton();
-        btnEliminarJ = new javax.swing.JButton();
+        eliminarBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jugadoresTable = new javax.swing.JTable();
         editBtn = new javax.swing.JButton();
@@ -234,8 +241,18 @@ public class RegistroJugador extends CustomInternalFrame {
         jLabel5.setText("Buscar Jugadores por Nombre");
 
         btnBuscarJ.setText("Buscar");
+        btnBuscarJ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarJActionPerformed(evt);
+            }
+        });
 
-        btnEliminarJ.setText("Eliminar");
+        eliminarBtn.setText("Eliminar");
+        eliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarBtnActionPerformed(evt);
+            }
+        });
 
         jugadoresTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -295,65 +312,60 @@ public class RegistroJugador extends CustomInternalFrame {
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(posicionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(78, 78, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(16, 16, 16)
+                                .addComponent(btnBuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(guardarBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(eliminarBtn))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(16, 16, 16)
-                                        .addComponent(btnBuscarJ)
-                                        .addGap(14, 14, 14)
-                                        .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(7, 7, 7)
+                                        .addComponent(jLabel1)
                                         .addGap(18, 18, 18)
-                                        .addComponent(guardarBtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnEliminarJ)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(playeraSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addContainerGap()
+                                        .addComponent(playeraSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel8)
-                                                    .addGap(86, 86, 86))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                        .addComponent(jLabel8)
+                                                        .addGap(86, 86, 86))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel10)
+                                                        .addGap(34, 34, 34)))
                                                 .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jLabel10)
-                                                    .addGap(34, 34, 34))))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(11, 11, 11)
-                                            .addComponent(jLabel9)
-                                            .addGap(33, 33, 33)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jLabel7)
-                                        .addGap(92, 92, 92)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(nombreTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                                        .addGap(5, 5, 5))
-                                    .addComponent(aPaternoTxt)
-                                    .addComponent(aMaternoTxt)
-                                    .addComponent(telefonoTxt))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fotoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSeleccionarFoto, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                                    .addGap(5, 5, 5)
+                                                    .addComponent(jLabel9)
+                                                    .addGap(33, 33, 33)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addGap(92, 92, 92)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(nombreTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                                                .addGap(5, 5, 5))
+                                            .addComponent(aPaternoTxt)
+                                            .addComponent(aMaternoTxt)
+                                            .addComponent(telefonoTxt))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fotoLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSeleccionarFoto, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -395,16 +407,14 @@ public class RegistroJugador extends CustomInternalFrame {
                         .addGap(14, 14, 14)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnBuscarJ)
-                        .addComponent(txtbuscarJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(editBtn)
-                        .addComponent(guardarBtn)
-                        .addComponent(btnEliminarJ)))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarJ)
+                    .addComponent(buscarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editBtn)
+                    .addComponent(guardarBtn)
+                    .addComponent(eliminarBtn))
+                .addGap(47, 47, 47)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -452,21 +462,53 @@ public class RegistroJugador extends CustomInternalFrame {
             editBtn.setText("Editar");
             int res = JOptionPane.showConfirmDialog(this, "¿Seguro que desea editar?");
             if (res == JOptionPane.OK_OPTION) {
-                currentJugador.edit();
+                syncJugadorData();
+                boolean jugadorEditado = currentJugador.edit();
+                System.out.println("JUGADOR EDITADO: "+jugadorEditado);
+                if (currentJugador.edit()) {
+                    JOptionPane.showMessageDialog(this, "Se edito el jugador con exito.");
+                }
                 clearForm();
             }
             
         }
     }//GEN-LAST:event_editBtnActionPerformed
 
+    private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
+        Object[] options = { "SÍ", "CANCELAR" };
+        int res = JOptionPane.showOptionDialog(this, "¿Seguro que desea eliminar este jugador?", "Atención",
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+            null, options, options[0]);
+        if (res == 0) {
+            currentJugador = new Jugador(jugadorIdToEdit);
+            if (currentJugador.delete()) {
+                JOptionPane.showMessageDialog(this, "Registro eliminado exitosamente.");
+                currentJugador = new Jugador();
+                clearForm();
+            }
+        }
+    }//GEN-LAST:event_eliminarBtnActionPerformed
+
+    private void btnBuscarJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarJActionPerformed
+        String searchValue = buscarTxt.getText();
+        System.out.println("BUSCANDO: "+searchValue);
+        if (searchValue.equals("") || searchValue.equals(" ")) {
+            CONTROLADOR_JUGADORES.initJugadores();
+        } else {
+            CONTROLADOR_JUGADORES.search(searchValue);
+        }
+        updateTableModel();
+    }//GEN-LAST:event_btnBuscarJActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField aMaternoTxt;
     private javax.swing.JTextField aPaternoTxt;
     private javax.swing.JButton btnBuscarJ;
-    private javax.swing.JButton btnEliminarJ;
     private javax.swing.JButton btnSeleccionarFoto;
+    private javax.swing.JTextField buscarTxt;
     private javax.swing.JButton editBtn;
+    private javax.swing.JButton eliminarBtn;
     private javax.swing.JLabel fotoLabel;
     private javax.swing.JButton guardarBtn;
     private javax.swing.JLabel jLabel1;
@@ -485,6 +527,5 @@ public class RegistroJugador extends CustomInternalFrame {
     public javax.swing.JComboBox<String> posicionBox;
     private javax.swing.ButtonGroup sexoGroup;
     private javax.swing.JTextField telefonoTxt;
-    private javax.swing.JTextField txtbuscarJ;
     // End of variables declaration//GEN-END:variables
 }
