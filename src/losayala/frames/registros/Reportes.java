@@ -5,11 +5,21 @@
  */
 package losayala.frames.registros;
 
+import java.util.Calendar;
+import javax.swing.table.DefaultTableModel;
+import losayala.conexiondb.ConexionBD;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+
 /**
  *
  * @author ilichh1
  */
 public class Reportes extends javax.swing.JInternalFrame {
+    
+    private String endDateStr, startDateStr;
 
     /**
      * Creates new form Reportes
@@ -30,9 +40,9 @@ public class Reportes extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         fechaInicio = new com.toedter.calendar.JDateChooser();
         fechaFin = new com.toedter.calendar.JDateChooser();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        reportesCombo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        resultTable = new javax.swing.JTable();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -40,14 +50,26 @@ public class Reportes extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         jLabel1.setText("Reportes");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ganancias", "Goleador", "Canchas", "Partidos" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+        fechaInicio.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                startDateChange(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        fechaFin.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                endDateChanged(evt);
+            }
+        });
+
+        reportesCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Goleador", "Ganancias" }));
+        reportesCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportesComboActionPerformed(evt);
+            }
+        });
+
+        resultTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,7 +80,7 @@ public class Reportes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(resultTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,7 +97,7 @@ public class Reportes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, 0, 168, Short.MAX_VALUE)))
+                        .addComponent(reportesCombo, 0, 168, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -83,7 +105,7 @@ public class Reportes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reportesCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -95,17 +117,120 @@ public class Reportes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void reportesComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesComboActionPerformed
+        createAndSetQuery();
+    }//GEN-LAST:event_reportesComboActionPerformed
 
+    private void startDateChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startDateChange
+        datesChanged();
+    }//GEN-LAST:event_startDateChange
+
+    private void endDateChanged(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_endDateChanged
+        datesChanged();
+    }//GEN-LAST:event_endDateChanged
+
+    private void datesChanged() {
+        Calendar startDate = fechaInicio.getCalendar();
+        Calendar endDate = fechaFin.getCalendar();
+        
+        System.out.println(startDate + "," + endDate);
+        if (startDate == null || endDate == null) {
+            startDateStr = null;
+            endDateStr = null;
+            return;
+        }
+       
+        startDateStr =
+                startDate.get(Calendar.YEAR) + "-" +
+                (startDate.get(Calendar.MONTH)+1) + "-" +
+                startDate.get(Calendar.DAY_OF_MONTH);
+        
+        endDateStr =
+                endDate.get(Calendar.YEAR) + "-" +
+                (endDate.get(Calendar.MONTH)+1) + "-" +
+                endDate.get(Calendar.DAY_OF_MONTH);
+        createAndSetQuery();
+    }
+    
+    private void createAndSetQuery() {
+        String queryName = (String)reportesCombo.getSelectedItem();
+        
+        if (startDateStr == null || startDateStr == null) {
+            System.out.println("SIN DATOS COMPLETOS PARA REPORTES");
+            return;
+        }
+        
+        String sqlQuery = "";
+        
+        switch (queryName) {
+            case "Goleador":
+                sqlQuery = createGolesQuery(startDateStr, endDateStr);
+            break;
+            case "Ganancias":
+                sqlQuery = createIngresosQuery(startDateStr, endDateStr);
+            break;
+            default:
+                System.out.println("QUERY SIN SOPORTE");
+        }
+        
+        resultTable.setModel(mapQuery(sqlQuery));
+    }
+    
+    public static DefaultTableModel mapQuery(String sqlQuery) {
+        String[] columnNames;
+        DefaultTableModel model = null;
+        
+        try {
+            Statement stmt = ConexionBD.createStatement();
+            stmt.execute(sqlQuery);
+            ResultSet rs = stmt.getResultSet();
+            ResultSetMetaData rsMeta = rs.getMetaData();
+            int columnCount = rsMeta.getColumnCount();
+            columnNames = new String[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                columnNames[i] = rsMeta.getColumnName(i+1);
+            }
+            
+            model = new DefaultTableModel(columnNames,0);
+            
+            while (rs.next()) {
+                String[] row = new String[columnCount];
+                int cont = 0;
+                for (String columnName : columnNames) {
+                    row[cont] = rs.getString(columnName);
+                    cont++;
+                }
+                model.addRow(row);
+            }
+            
+            stmt.close();
+            rs.close();
+        } catch(SQLException e) {
+            System.out.println("NO SE PUEDO EJECUTAR LA CONSULTA PARA LOS REPORTES");
+            System.out.println(e.getLocalizedMessage());
+        }
+        
+        return model;
+    }
+    
+    public static String createGolesQuery(String startDate, String endDate) {
+        String sql = "SELECT CONCAT(Per.nombre, ' ', Per.apellido_pat, ' ', Per.apellido_mat) as 'Nombre', CONCAT('# ',J.num_playera) AS 'Playera', ( 	SELECT     eq.nombre 	FROM equipo eq 	WHERE eq.id_equipo = (SELECT id_equipo FROM jugador_equipo WHERE id_jugador = J.id_jugador) ) AS 'Equipo', COUNT(G.ID_GOL) AS 'Goles' FROM GOL G JOIN JUGADOR J ON G.ID_JUGADOR = J.ID_JUGADOR JOIN PERSONA Per ON Per.ID_PERSONA =  J.ID_JUGADOR JOIN ( 	SELECT * FROM Partido     WHERE Partido.fecha BETWEEN '2019-04-01' AND '2019-04-20' ) P ON G.ID_PARTIDO = P.ID_PARTIDO JOIN EQUIPO E ON E.ID_EQUIPO = ( 	SELECT 	ID_EQUIPO 	FROM jugador_equipo 	WHERE id_jugador = J.id_jugador ) GROUP BY J.ID_JUGADOR ORDER BY goles DESC";
+        sql = sql.replace("@startDate@", startDate).replace("@endDate@", endDate);
+        return sql;
+    }
+    
+    public static String createIngresosQuery(String startDate, String endDate) {
+        String sql = "SELECT CONCAT(C.NOMBRE) AS Cancha, COUNT( P.ID_CANCHA ) AS  Partios, CONCAT('$ ',SUM( C.COSTO )) AS Ingreso FROM PARTIDO P JOIN CANCHA C ON P.ID_CANCHA = C.ID_CANCHA WHERE FECHA BETWEEN  '@startDate@' AND  '@endDate@' GROUP BY NOMBRE DESC";
+        sql = sql.replace("@startDate@", startDate).replace("@endDate@", endDate);
+        return sql;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser fechaFin;
     private com.toedter.calendar.JDateChooser fechaInicio;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<String> reportesCombo;
+    private javax.swing.JTable resultTable;
     // End of variables declaration//GEN-END:variables
 }
