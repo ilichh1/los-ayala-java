@@ -18,6 +18,10 @@ public class Arbitro extends Persona implements DatabaseObject {
     
     private int idArbitro = -1;
 
+    public Arbitro() {
+        
+    }
+
     /**
      * @return the idArbitro
      */

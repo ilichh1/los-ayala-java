@@ -5,21 +5,74 @@
  */
 package losayala.frames.registros;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import losayala.interfaces.CustomInternalFrame;
+import losayala.objetos.Arbitro;
+import losayala.objetos.ControladorJugadores;
+import losayala.objetos.Jugador;
 
 /**
  *
  * @author Axel
- */
+ *
+ */ 
 public class RegistroArbitro extends CustomInternalFrame {
-
+private static final Arbitro CONTROLADOR_ARBITRO = new Arbitro ();
+    private Jugador currentArbitro = new Jugador();
+    private int ArbitroIdToEdit = -1;
+    private boolean isEditMode = false;
     /**
      * Creates new form RegistroAlbitro
      */
-    public RegistroArbitro() {
-        initComponents();
+    
+    private void saveArbitroData() {
+        // Instancia
+        String nombre = txtNombreA.getText();
+        String aMaterno = txtApellido2A.getText();
+        String aPaterno = txtApellido1A.getText();
+        String telefono = txtTelA.getText();
+        
+        // Asigna
+        currentArbitro.persona.setNombres(nombre);
+        currentArbitro.persona.setApellidoMaterno(aMaterno);
+        currentArbitro.persona.setApellidoPaterno(aPaterno);
+        currentArbitro.persona.setTelefono(telefono);
+      
+        // Guarda
+        boolean seGuardoJugador = currentArbitro.save();
+        
+        if (seGuardoJugador) {
+            JOptionPane.showMessageDialog(this, "Se guardo con exito el jugador");
+        } else {
+            Object[] options = { "OK" };
+            int res = JOptionPane.showOptionDialog(null, "No se pudo guardar el jugador", "Atención",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, options, options[0]);
+        }
+        
+        clearForm();
     }
-
+    
+    private void updateForm() {
+        txtNombreA.setText(currentArbitro.persona.getNombres());
+        txtApellido1A.setText(currentArbitro.persona.getApellidoPaterno());
+        txtApellido2A.setText(currentArbitro.persona.getApellidoMaterno());
+        txtTelA.setText(currentArbitro.persona.getTelefono());
+    }
+    
+    private void clearForm() {
+        // currentArbitro = new Arbitro();
+        txtNombreA.setText(null);
+        txtApellido1A.setText(null);
+        txtApellido2A.setText(null);
+        txtTelA.setText(null);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
