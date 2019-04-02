@@ -18,6 +18,14 @@ public class Arbitro extends Persona implements DatabaseObject {
     
     private int idArbitro = -1;
 
+    public Arbitro() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Arbitro() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * @return the idArbitro
      */
