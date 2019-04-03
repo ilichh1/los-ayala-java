@@ -146,13 +146,11 @@ public final class Contenedor extends javax.swing.JFrame {
         setTitle("LOS AYALA");
         setBounds(new java.awt.Rectangle(0, 23, 500, 500));
 
-        desktopPane.setBackground(new java.awt.Color(16, 129, 14));
-        desktopPane.setBounds(new java.awt.Rectangle(0, 0, 500, 500));
-        desktopPane.setLayout(null);
+        desktopPane.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/inicio/fondo-cancha.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/losayala/frames/registros/soccer19.png"))); // NOI18N
         desktopPane.add(jLabel1);
-        jLabel1.setBounds(0, 0, 610, 530);
+        jLabel1.setBounds(0, 0, 1700, 1010);
 
         jMenu1.setText("Archivo");
 
@@ -180,11 +178,11 @@ public final class Contenedor extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1700, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
         );
 
         pack();
